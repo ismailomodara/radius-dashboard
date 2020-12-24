@@ -1,28 +1,85 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import Home from '../views/Home.vue'
+
+const Login = () => import('@/pages/login.vue')
+const Register = () => import('@/pages/register.vue')
+
+const Dashboard = () => import('../pages/dashboard/index.vue')
+
+const Reports = () => import('../pages/reports/index')
+const Report = () => import('../pages/reports/id')
+
+const Settings = () => import('../pages/settings/index')
 
 Vue.use(VueRouter)
 
 const routes = [
   {
     path: '/',
-    name: 'Home',
-    component: Home
+    redirect: {
+      path: '/login',
+      component: Login
+    },
+    meta: {
+      guest: true
+    }
   },
   {
-    path: '/about',
-    name: 'About',
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '../views/About.vue')
+    path: '/login',
+    name: 'login',
+    component: Login,
+    meta: {
+      guest: true
+    }
+  },
+  {
+    path: '/register',
+    name: 'register',
+    component: Register,
+    meta: {
+      guest: true
+    }
+  },
+  {
+    path: '/dashboard',
+    name: 'dashboard.index',
+    component: Dashboard,
+    meta: {
+      guest: true,
+      layout: 'app'
+    }
+  },
+  {
+    path: '/reports',
+    name: 'reports.index',
+    component: Reports,
+    meta: {
+      guest: true,
+      layout: 'app'
+    }
+  },
+  {
+    path: '/reports/:id',
+    name: 'reports.report',
+    component: Report,
+    meta: {
+      guest: true,
+      layout: 'app'
+    }
+  },
+  {
+    path: '/settings',
+    name: 'settings.index',
+    component: Settings,
+    meta: {
+      guest: true,
+      layout: 'app'
+    }
   }
 ]
 
 const router = new VueRouter({
   mode: 'history',
-  base: process.env.BASE_URL,
   routes
 })
 
