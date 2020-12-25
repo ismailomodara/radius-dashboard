@@ -97,9 +97,9 @@ export default {
           name: 'reports'
         },
         {
-          icon: 'settings',
-          label: 'Settings',
-          name: 'settings'
+          icon: 'credit-card',
+          label: 'Billings',
+          name: 'billings'
         }
       ]
     }
