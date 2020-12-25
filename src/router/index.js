@@ -7,6 +7,9 @@ const Register = () => import('@/pages/register.vue')
 const Dashboard = () => import('@/pages/dashboard/index.vue')
 const AccountVerification = () => import('@/pages/dashboard/verify.vue')
 
+const Verifications = () => import('@/pages/verifications/index.vue')
+const IdVerification = () => import('@/pages/verifications/verify.vue')
+
 const Reports = () => import('@/pages/reports/index')
 const Report = () => import('@/pages/reports/id')
 
@@ -51,9 +54,27 @@ const routes = [
     }
   },
   {
-    path: '/dashboard/verify',
+    path: '/dashboard/verifications',
     name: 'dashboard.verify',
     component: AccountVerification,
+    meta: {
+      guest: true,
+      layout: 'app'
+    }
+  },
+  {
+    path: '/verifications',
+    name: 'verifications.index',
+    component: Verifications,
+    meta: {
+      guest: true,
+      layout: 'app'
+    }
+  },
+  {
+    path: '/verifications/verify-id',
+    name: 'verifications.verify',
+    component: IdVerification,
     meta: {
       guest: true,
       layout: 'app'

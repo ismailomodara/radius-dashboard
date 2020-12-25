@@ -38,10 +38,6 @@ export default {
     align-items: center;
     justify-content: space-between;
 
-    > div {
-      width: 100%;
-    }
-
     h6 {
       text-transform: uppercase;
       font-weight: 500;

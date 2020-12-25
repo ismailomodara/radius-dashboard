@@ -101,41 +101,10 @@
 
 // Button
 .el-button {
-  height: 50px;
   font-size: 1rem;
   border-radius: 8px;
   font-weight: 600;
   text-transform: uppercase;
-  font-family: "IBM Plex Sans", sans-serif;
-
-  &.is-plain,
-  &.is-plain:focus {
-    background: transparent;
-    color: #000;
-    border-color: #000;
-    transition: all 0.25s ease-in;
-
-    &.is-white {
-      color: #fff;
-      border-color: #fff;
-    }
-
-    &:hover {
-      background: #00000020;
-      color: #000000;
-      transition: all 0.25s ease-out;
-
-      &.is-white {
-        background: #fff;
-        color: #000;
-        border-color: #fff;
-      }
-    }
-  }
-
-  &:not(.el-button--small):not(.is-circle) {
-    padding: 15px 40px;
-  }
 
   &:focus {
     box-shadow: none;
@@ -203,7 +172,7 @@
 }
 
 .el-input__inner {
-  font-weight: 600;
+  font-weight: 500;
   font-size: 1.1rem;
   color: #000;
 
@@ -233,9 +202,8 @@
   }
 
   p {
-    opacity: 1;
-    color: #000000;
     font-size: 1rem;
+    word-break: break-word;
   }
 }
 

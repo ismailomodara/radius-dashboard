@@ -82,6 +82,16 @@ export default {
           name: 'dashboard'
         },
         {
+          icon: 'check-circle',
+          label: 'Verify',
+          name: 'verifications'
+        },
+        {
+          icon: 'lock',
+          label: 'AuthX',
+          name: 'authx'
+        },
+        {
           icon: 'clipboard',
           label: 'Reports',
           name: 'reports'

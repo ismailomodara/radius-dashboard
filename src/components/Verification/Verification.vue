@@ -1,26 +1,28 @@
 <template>
   <el-dialog :visible.sync="shouldShow" @close="closeEvent" width="30%">
     <template slot="title">
-      <h6 class="title">Request #{{ request.id }}</h6>
+      <h6 class="title">Verification for {{ verification.type }}</h6>
     </template>
     <el-row type="flex" class="mb-2">
       <el-col :md="10">
-        <p>Request for</p>
-        <span>{{ request.service }}</span>
+        <p>User ID for</p>
+        <span>{{ verification.id }}</span>
       </el-col>
       <el-col :md="14">
-        <p>Date of Request</p>
-        <span>{{ request.date }}</span>
+        <p>Date</p>
+        <span>{{ verification.date }}</span>
+      </el-col>
+    </el-row>
+    <el-row type="flex" class="mb-2">
+      <el-col :span="24">
+        <p>Full name</p>
+        <span>{{ verification.name }}</span>
       </el-col>
     </el-row>
     <el-row type="flex">
-      <el-col :md="10">
-        <p>Status</p>
-        <el-tag :type="setType(request.status)">{{ formatText(request.status) }}</el-tag>
-      </el-col>
-      <el-col :md="14">
-        <p>Details</p>
-        <span>{{ formatText(request.detail) }}</span>
+      <el-col :span="24">
+        <p>Address</p>
+        <span>{{ verification.address }}</span>
       </el-col>
     </el-row>
   </el-dialog>
@@ -28,13 +30,13 @@
 
 <script>
 export default {
-  name: 'Request',
+  name: 'Verification',
   props: {
     show: {
       type: Boolean,
       default: true
     },
-    request: {
+    verification: {
       type: Object,
       required: true
     }

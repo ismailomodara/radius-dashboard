@@ -16,7 +16,9 @@
     <div class="rd-page--section">
       <el-row type="flex" class="flex-wrap" :gutter="40">
         <el-col :xs="24" :sm="12" :md="12" :lg="12">
-          <summary-card label="Wallet Balance" :value="formatPrice(walletBalance)" />
+          <summary-card label="Wallet Balance" :value="formatPrice(walletBalance)">
+            <el-button type="success">Fund</el-button>
+          </summary-card>
         </el-col>
         <el-col :xs="24" :sm="12" :md="12" :lg="12">
           <summary-card :label="requests[0].label" :value="requests[0].value" />
@@ -79,7 +81,7 @@ export default {
   },
   methods: {
     verify () {
-      this.$router.push({ name: 'dashboard.verify' })
+      this.$router.push({ name: 'dashboard.verifications' })
     }
   }
 }
