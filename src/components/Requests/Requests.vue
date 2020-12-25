@@ -1,66 +1,51 @@
 <template>
-  <div v-loading.fullscreen="loading">
-    <el-row type="flex" class="flex-wrap mb-2" :gutter="40">
-      <el-col v-for="(data, i) in summary" :key="i" :xs="24" :sm="12" :md="8" :lg="8">
-        <summary-card :label="data.label" :value="data.value" />
-      </el-col>
-    </el-row>
+  <div>
     <el-row type="flex">
       <el-col :span="24">
         <card>
           <template slot="header">
+            <h5>Reports</h5>
             <div class="is-flex is-align-center is-justify-end">
               <el-input
                 v-model="search"
                 type="text"
                 placeholder="Search"
                 suffix-icon="rd-icon--search"
-                class="search"
+                class="search mr-1"
                 :disabled="!pageData.data.length" />
+              <el-button type="primary" size="medium">Export CSV</el-button>
             </div>
           </template>
           <template slot="content">
-            <el-table :data="pageData.data" empty-text="No Report(s) added">
-              <el-table-column prop="index" width="60">
+            <el-table :data="pageData.data" empty-text="No Requests(s)">
+              <el-table-column prop="index" width="100">
                 <template slot="header">
                 <span class="rd-table--header">
-                  S/N
+                  ID
                 </span>
                 </template>
                 <template slot-scope="scope">
-                  <p>{{ scope.$index + 1 }}</p>
+                  <p>{{ scope.row.id }}</p>
                 </template>
               </el-table-column>
-              <el-table-column prop="name" width="200">
+              <el-table-column prop="date" width="200">
                 <template slot="header">
-                <span class="rd-table--header">
-                  Name
-                </span>
+                  <span class="rd-table--header">
+                    Date
+                  </span>
                 </template>
                 <template slot-scope="scope">
-                  <router-link :to="{ name: 'reports.report', params: {id: scope.row.id }}">
-                    <p>{{ scope.row.first_name }} {{ scope.row.last_name }}</p>
-                  </router-link>
+                  <p>{{ scope.row.date }}</p>
                 </template>
               </el-table-column>
-              <el-table-column prop="date_of_arrest">
+              <el-table-column prop="service">
                 <template slot="header">
                 <span class="rd-table--header">
-                  Date of Arrest
+                  Service
                 </span>
                 </template>
                 <template slot-scope="scope">
-                  <p>{{ scope.row.date_of_arrest }}</p>
-                </template>
-              </el-table-column>
-              <el-table-column prop="place_of_arrest">
-                <template slot="header">
-                <span class="rd-table--header">
-                  Place of Arrest
-                </span>
-                </template>
-                <template slot-scope="scope">
-                  <p>{{ scope.row.place_of_arrest }}</p>
+                  <p>{{ scope.row.service }}</p>
                 </template>
               </el-table-column>
               <el-table-column prop="status">
@@ -70,28 +55,17 @@
                 </span>
                 </template>
                 <template slot-scope="scope">
-                  <el-tag v-if="scope.row.release_status === 'resolved'" type="success">Resolved</el-tag>
-                  <el-tag v-else type="warning">Unresolved</el-tag>
+                  <el-tag :type="setType(scope.row.status)">{{ formatText(scope.row.status) }}</el-tag>
                 </template>
               </el-table-column>
-              <el-table-column width="80">
+              <el-table-column prop="detail">
+                <template slot="header">
+                <span class="rd-table--header">
+                  Detail
+                </span>
+                </template>
                 <template slot-scope="scope">
-                  <el-dropdown class="more" @command="command">
-                    <span>
-                      <i class="rd-icon--more-horizontal"></i>
-                    </span>
-                    <el-dropdown-menu slot="dropdown">
-                      <el-dropdown-item
-                        icon="rd-icon--edit"
-                        :command="{ action: 'edit', id: scope.row.id, report: scope.row }">
-                        Edit</el-dropdown-item>
-                      <el-dropdown-item
-                        icon="rd-icon--activity"
-                        :command="{ action: 'status', id: scope.row.id, report: scope.row}">
-                        Change status
-                      </el-dropdown-item>
-                    </el-dropdown-menu>
-                  </el-dropdown>
+                  <p @click="showReport(scope.row.id)" class="text-muted text-underline">See details</p>
                 </template>
               </el-table-column>
             </el-table>
@@ -119,85 +93,88 @@ export default {
       page: 1,
       pageData: {
         from: 1,
-        to: 5,
-        total: 5,
+        to: 10,
+        total: 10,
         data: [
           {
-            id: 1,
-            first_name: 'Sulaimon',
-            last_name: 'Saliu',
-            email: 'sulaimon@gmail.com',
-            date_of_arrest: '12 Oct, 2020',
-            place_of_arrest: 'Alausa',
-            release_status: 'resolved'
+            id: '001',
+            date: '24 Dec 2020',
+            service: 'BVN',
+            status: 'successful',
+            detail: 'Detail'
           },
           {
-            id: 2,
-            first_name: 'Adio',
-            last_name: 'Jamiu',
-            email: 'jamiu@gmail.com',
-            date_of_arrest: '8th Oct, 2020',
-            place_of_arrest: 'Ikeja',
-            release_status: 'unresolved'
+            id: '002',
+            date: '24 Dec 2020',
+            service: 'CAC',
+            status: 'successful',
+            detail: 'Detail'
           },
           {
-            id: 3,
-            first_name: 'Zara',
-            last_name: 'Larsson',
-            email: 'zara@gmail.com',
-            date_of_arrest: '8th Oct, 2020',
-            place_of_arrest: 'Surulere',
-            release_status: 'unresolved'
+            id: '003',
+            date: '24 Dec 2020',
+            service: 'AUTH',
+            status: 'pending',
+            detail: 'Detail'
           },
           {
-            id: 4,
-            first_name: 'Patrick',
-            last_name: 'Star',
-            email: 'patrick.start@yahoo.com',
-            date_of_arrest: '6th Oct, 2020',
-            place_of_arrest: 'Yaba',
-            release_status: 'resolved'
+            id: '004',
+            date: '24 Dec 2020',
+            service: 'AUTH',
+            status: 'successful',
+            detail: 'Detail'
           },
           {
-            id: 5,
-            first_name: 'Spongebob',
-            last_name: 'Squarepants',
-            email: 'spongebob@gmail.com',
-            date_of_arrest: '6th Oct, 2020',
-            place_of_arrest: 'Mushin',
-            release_status: 'resolved'
+            id: '005',
+            date: '24 Dec 2020',
+            service: 'NIN',
+            status: 'failed',
+            detail: 'Detail'
+          },
+          {
+            id: '006',
+            date: '24 Dec 2020',
+            service: 'BVN',
+            status: 'successful',
+            detail: 'Detail'
+          },
+          {
+            id: '007',
+            date: '24 Dec 2020',
+            service: 'CAC',
+            status: 'successful',
+            detail: 'Detail'
+          },
+          {
+            id: '008',
+            date: '24 Dec 2020',
+            service: 'AUTH',
+            status: 'pending',
+            detail: 'Detail'
+          },
+          {
+            id: '009',
+            date: '24 Dec 2020',
+            service: 'AUTH',
+            status: 'successful',
+            detail: 'Detail'
+          },
+          {
+            id: '010',
+            date: '24 Dec 2020',
+            service: 'NIN',
+            status: 'failed',
+            detail: 'Detail'
           }
         ]
       },
-      report: {}
-    }
-  },
-  computed: {
-    summary () {
-      return [
-        {
-          label: 'Number of reports',
-          value: 0
-        },
-        {
-          label: 'Resolved reports',
-          value: 0
-        },
-        {
-          label: 'Unresolved report',
-          value: 0
-        }
-      ]
+      showRequest: false,
+      request: {}
     }
   },
   methods: {
-    command (command) {
-      this.report = { ...command.report }
-      if (command.action === 'status') {
-        //
-      } else {
-        //
-      }
+    showReport (id) {
+      this.$router.push({ name: 'reports.report', params: { id } })
     }
   }
 }

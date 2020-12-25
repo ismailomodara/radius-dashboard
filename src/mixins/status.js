@@ -4,7 +4,7 @@ export default {
       const status = value?.toLowerCase()
 
       const warning = ['pending', 'incomplete']
-      const success = ['successful']
+      const success = ['successful', 'verified']
       const danger = ['failed']
 
       if (warning.includes(status)) {
