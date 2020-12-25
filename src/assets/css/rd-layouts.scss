@@ -29,6 +29,7 @@ h6 {
 
 p {
   font-size: 1rem;
+  font-weight: 400;
   line-height: 1.8;
   color: #140508;
   margin: 0;
@@ -89,6 +90,10 @@ a, a:hover {
 
 .h-100 {
   height: 100%;
+}
+
+.mx-auto {
+  margin: 0 auto;
 }
 
 .mb-0 {
@@ -212,7 +217,7 @@ a, a:hover {
 }
 
 .text-primary {
-  color: #D05169;
+  color: var(--primary) !important;
 }
 
 .text-center {

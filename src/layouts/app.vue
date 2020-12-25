@@ -7,32 +7,23 @@
             <img :src="getImage('logo.png')" alt="Radius" />
           </div>
           <div>
-            <div class="rd-user-profile web">
+            <div class="rd-user">
+              <el-switch
+                v-model="userActive"
+                active-text="Live"
+                class="mr-1">
+              </el-switch>
+              <el-badge :value="3" class="mr-1" type="primary">
+                <i class="rd-icon--bell"></i>
+              </el-badge>
+              <p>{{ userName }}</p>
               <el-dropdown trigger="click" @command="command">
-                <div class="is-flex is-align-center">
-                  <p>
-                    {{ userName }}
-                  </p>
+                <div class="rd-user--action">
                   <avatar :size="36" :name="userName" />
+                  <i class="rd-icon--chevron-down"></i>
                 </div>
                 <el-dropdown-menu slot="dropdown">
                   <el-dropdown-item icon="rd-icon--user" command="settings"
-                  >Profile</el-dropdown-item
-                  >
-                  <el-dropdown-item icon="el-icon-switch-button" command="logout"
-                  >Logout</el-dropdown-item
-                  >
-                </el-dropdown-menu>
-              </el-dropdown>
-            </div>
-            <div class="rd-user-profile mobile">
-              <el-dropdown trigger="click" @command="command">
-                <div class="is-flex is-align-center">
-                  <avatar :size="40" :name="userName" />
-                  <i class="ch-icon--chevron-down ml-1"></i>
-                </div>
-                <el-dropdown-menu slot="dropdown">
-                  <el-dropdown-item icon="ch-icon--user" command="settings"
                   >Profile</el-dropdown-item
                   >
                   <el-dropdown-item icon="el-icon-switch-button" command="logout"
@@ -82,6 +73,7 @@ export default {
   name: 'AppLayout',
   data () {
     return {
+      userActive: true,
       activeMenu: '',
       routes: [
         {
@@ -163,10 +155,21 @@ export default {
         width: auto;
       }
 
-      .rd-user-profile {
+      .rd-user {
+        display: flex;
+        align-items: center;
+
         p {
-          margin-right: 10px;
+          margin: 0 10px;
           font-weight: 500;
+        }
+
+        .rd-user--action {
+          display: flex;
+          align-items: center;
+          i {
+            margin-left: 7px;
+          }
         }
       }
     }
@@ -199,7 +202,7 @@ export default {
 
           &.is-active {
             opacity: 1;
-            border-bottom: 4px solid #D05169 !important
+            border-bottom: 4px solid var(--primary) !important
           }
         }
       }

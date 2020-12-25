@@ -176,7 +176,7 @@
 
 //Dialog
 .el-dialog {
-  border-radius: 0;
+  border-radius: 8px;
   margin-top: 0 !important;
   top: 50%;
   transform: translateY(-50%);
@@ -371,7 +371,35 @@
 
     span {
       font-weight: 600;
-      color: #D05169;
+      color: var(--primary);
+      cursor: pointer;
     }
+  }
+}
+
+
+//Switch
+.el-switch {
+  .el-switch__core {
+    width: 43px;
+    height: 26px;
+    border-radius: 100px;
+
+    &::after {
+      height: 20px;
+      width: 20px;
+    }
+  }
+
+  &.is-checked {
+    .el-switch__core {
+      &::after {
+        left: 87%;
+      }
+    }
+  }
+
+  .el-switch__label * {
+    font-size: 1rem;
   }
 }

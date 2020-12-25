@@ -1,10 +1,12 @@
 <template>
-  <div class="rp-summary--card">
-    <div class="rp-summary--card__text">
+  <div class="rd-summary--card">
+    <div class="rd-summary--card__text">
       <p>{{ label }}</p>
       <h1>{{ value }}</h1>
     </div>
-    <div class="rp-summary--card__icon"></div>
+    <div class="rd-summary--card__action">
+      <slot />
+    </div>
   </div>
 </template>
 
@@ -31,7 +33,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-  .rp-summary--card {
+  .rd-summary--card {
     background: #fff;
     box-shadow: -4px 16px 30px #57645e29;
     border-radius: 10px;
@@ -42,7 +44,7 @@ export default {
     align-items: center;
     margin-bottom: 20px;
 
-    .rp-summary--card__text {
+    .rd-summary--card__text {
       p {
         text-transform: uppercase;
         letter-spacing: 1px;
@@ -51,18 +53,6 @@ export default {
       }
 
       h1 {
-        font-weight: 600;
-      }
-    }
-
-    .rp-summary--card__icon {
-      padding: 15px;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-
-      i {
-        font-size: 1.5rem;
         font-weight: 600;
       }
     }

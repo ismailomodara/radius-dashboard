@@ -1,6 +1,6 @@
 <template>
-  <div class="rp-card">
-    <div v-if="header" class="rp-card--heading">
+  <div class="rd-card">
+    <div v-if="header" class="rd-card--heading">
       <slot name="header" />
     </div>
     <slot name="content" />
@@ -23,7 +23,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.rp-card {
+.rd-card {
   background: #fff;
   box-shadow: -4px 16px 30px #57645e29;
   border-radius: 10px;
@@ -31,7 +31,7 @@ export default {
   position: relative;
   margin-bottom: 30px;
 
-  .rp-card--heading {
+  .rd-card--heading {
     min-height: 40px;
     margin-bottom: 10px;
     display: flex;

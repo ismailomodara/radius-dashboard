@@ -4,12 +4,13 @@ import VueRouter from 'vue-router'
 const Login = () => import('@/pages/login.vue')
 const Register = () => import('@/pages/register.vue')
 
-const Dashboard = () => import('../pages/dashboard/index.vue')
+const Dashboard = () => import('@/pages/dashboard/index.vue')
+const AccountVerification = () => import('@/pages/dashboard/verify.vue')
 
-const Reports = () => import('../pages/reports/index')
-const Report = () => import('../pages/reports/id')
+const Reports = () => import('@/pages/reports/index')
+const Report = () => import('@/pages/reports/id')
 
-const Settings = () => import('../pages/settings/index')
+const Settings = () => import('@/pages/settings/index')
 
 Vue.use(VueRouter)
 
@@ -44,6 +45,15 @@ const routes = [
     path: '/dashboard',
     name: 'dashboard.index',
     component: Dashboard,
+    meta: {
+      guest: true,
+      layout: 'app'
+    }
+  },
+  {
+    path: '/dashboard/verify',
+    name: 'dashboard.verify',
+    component: AccountVerification,
     meta: {
       guest: true,
       layout: 'app'

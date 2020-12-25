@@ -8,83 +8,78 @@
         <template slot="title">
           <div class="el-alert--content">
             <h6>Verify Account!</h6>
-            <p>You need to verify your account, to enable all functionalities. <span>Verify now.</span></p>
+            <p>To keep us all safe, wee need to verify your company details. <span @click="verify">Verify now.</span></p>
           </div>
         </template>
       </el-alert>
     </div>
     <div class="rd-page--section">
       <el-row type="flex" class="flex-wrap" :gutter="40">
-        <el-col v-for="(data, i) in summary" :key="i" :xs="24" :sm="12" :md="12" :lg="12">
-          <summary-card :label="data.label" :value="data.value" />
+        <el-col :xs="24" :sm="12" :md="12" :lg="12">
+          <summary-card label="Wallet Balance" :value="formatPrice(walletBalance)" />
+        </el-col>
+        <el-col :xs="24" :sm="12" :md="12" :lg="12">
+          <summary-card :label="requests[0].label" :value="requests[0].value" />
         </el-col>
       </el-row>
     </div>
     <div class="rd-page--section">
       <el-row type="flex" class="flex-wrap" :gutter="40">
-        <el-col v-for="(request, i) in requests" :key="i" :xs="24" :sm="12" :md="8" :lg="8">
+        <el-col v-for="(request, i) in requests.slice(1)" :key="i" :xs="24" :sm="12" :md="8" :lg="8">
           <summary-card :label="request.label" :value="request.value" />
         </el-col>
       </el-row>
     </div>
     <div class="rd-page--section">
-      <el-row type="flex">
-        <el-col :span="24">
-          <card :header="false">
-            <template slot="content">
-              <bar-chart />
-            </template>
-          </card>
-        </el-col>
-      </el-row>
+      <requests-chart />
+    </div>
+    <div class="rd-page--section">
+      <recent-requests />
     </div>
   </div>
 </template>
 
 <script>
-import BarChart from '../../components/Chart/BarChart'
+import RequestsChart from '@/components/Requests/RequestsChart'
+import RecentRequests from '@/components/Requests/RecentRequests'
 
 export default {
   name: 'Dashboard',
   components: {
-    BarChart
+    RecentRequests,
+    RequestsChart
   },
   data () {
     return {
-      loading: false
+      loading: false,
+      walletBalance: 15725
     }
   },
   computed: {
-    dashboard () {
-      return this.$store.getters.dashboard
-    },
-    summary () {
-      return [
-        {
-          label: 'Wallet Balance',
-          value: this.formatFigure(15725)
-        },
-        {
-          label: 'Total Requests',
-          value: 42
-        }
-      ]
-    },
     requests () {
       return [
         {
+          label: 'Total Requests',
+          value: this.formatFigure(3700)
+        },
+        {
           label: 'Successful Requests',
-          value: 10
+          value: this.formatFigure(2750)
         },
         {
           label: 'Pending Requests',
-          value: 5
+          value: this.formatFigure(200)
         },
         {
           label: 'Failed Requests',
-          value: 2
+          value: this.formatFigure(700)
         }
       ]
+    }
+  },
+  methods: {
+    verify () {
+      this.$router.push({ name: 'dashboard.verify' })
     }
   }
 }

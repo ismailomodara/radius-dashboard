@@ -6,6 +6,9 @@ export default {
     formatFigure (value) {
       return Number(value).toLocaleString()
     },
+    formatFigureToK (value) {
+      return `${Number(value) / 1000}k`
+    },
     formatText (text) {
       return text
         ? text.charAt(0).toUpperCase() + text.substr(1).toLowerCase()
