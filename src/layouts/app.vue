@@ -100,6 +100,11 @@ export default {
           icon: 'credit-card',
           label: 'Billings',
           name: 'billings'
+        },
+        {
+          icon: 'settings',
+          label: 'Settings',
+          name: 'settings'
         }
       ]
     }

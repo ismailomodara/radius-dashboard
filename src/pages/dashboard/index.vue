@@ -54,7 +54,7 @@ export default {
   data () {
     return {
       loading: false,
-      walletBalance: 15725
+      walletBalance: 150500
     }
   },
   computed: {
@@ -81,7 +81,7 @@ export default {
   },
   methods: {
     verify () {
-      this.$router.push({ name: 'dashboard.verifications' })
+      this.$router.push({ name: 'dashboard.verify' })
     }
   }
 }

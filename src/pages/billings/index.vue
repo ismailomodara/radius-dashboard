@@ -4,7 +4,7 @@
       <el-col :span="24">
         <card>
           <template slot="header">
-            <h5>Reports</h5>
+            <h5>Billings</h5>
             <div class="is-flex is-align-center is-justify-end">
               <el-input
                 v-model="search"
@@ -21,14 +21,19 @@
               <el-table-column prop="index" width="100">
                 <template slot="header">
                 <span class="rd-table--header">
-                  ID
+                  <i class="rd-icon--arrow-down text-muted"></i>
                 </span>
                 </template>
                 <template slot-scope="scope">
-                  <p>{{ scope.row.id }}</p>
+                  <span v-if="scope.row.tx === 'credit'" class="rd-transaction credit">
+                    <i class="rd-icon--arrow-down"></i>
+                  </span>
+                  <span v-else class="rd-transaction debit">
+                    <i class="rd-icon--arrow-up"></i>
+                  </span>
                 </template>
               </el-table-column>
-              <el-table-column prop="date" width="200">
+              <el-table-column prop="date">
                 <template slot="header">
                   <span class="rd-table--header">
                     Date
@@ -38,34 +43,44 @@
                   <p>{{ scope.row.date }}</p>
                 </template>
               </el-table-column>
+              <el-table-column prop="activity">
+                <template slot="header">
+                  <span class="rd-table--header">
+                    Activity
+                  </span>
+                </template>
+                <template slot-scope="scope">
+                  <p>{{ formatText(scope.row.activity) }}</p>
+                </template>
+              </el-table-column>
               <el-table-column prop="service">
-                <template slot="header">
-                <span class="rd-table--header">
-                  Service
-                </span>
-                </template>
-                <template slot-scope="scope">
-                  <p>{{ scope.row.service }}</p>
-                </template>
-              </el-table-column>
-              <el-table-column prop="status">
-                <template slot="header">
-                <span class="rd-table--header">
-                  Status
-                </span>
-                </template>
-                <template slot-scope="scope">
-                  <el-tag :type="setType(scope.row.status)">{{ formatText(scope.row.status) }}</el-tag>
-                </template>
-              </el-table-column>
-              <el-table-column prop="detail">
                 <template slot="header">
                 <span class="rd-table--header">
                   Detail
                 </span>
                 </template>
                 <template slot-scope="scope">
-                  <p @click="showReport(scope.row.id)" class="text-muted text-underline text-cursor">See details</p>
+                  <p>{{ scope.row.detail }}</p>
+                </template>
+              </el-table-column>
+              <el-table-column prop="charge">
+                <template slot="header">
+                <span class="rd-table--header">
+                  Charge
+                </span>
+                </template>
+                <template slot-scope="scope">
+                  <p>{{ scope.row.tx === 'debit' ? '-' : '' }} {{ formatPrice(scope.row.charge) }}</p>
+                </template>
+              </el-table-column>
+              <el-table-column prop="balance">
+                <template slot="header">
+                <span class="rd-table--header">
+                  Balance
+                </span>
+                </template>
+                <template slot-scope="scope">
+                  <p>{{ formatPrice(scope.row.balance) }}</p>
                 </template>
               </el-table-column>
             </el-table>
@@ -93,99 +108,106 @@ export default {
       page: 1,
       pageData: {
         from: 1,
-        to: 10,
-        total: 10,
+        to: 8,
+        total: 8,
         data: [
           {
-            id: '001',
+            id: 1,
+            tx: 'debit',
             date: '24 Dec 2020',
-            service: 'BVN',
-            status: 'successful',
-            detail: 'Detail'
+            activity: 'charge',
+            detail: 'Charge for VBN request: 222***234',
+            charge: 10,
+            balance: 150075
           },
           {
-            id: '002',
+            id: 2,
+            tx: 'credit',
             date: '24 Dec 2020',
-            service: 'CAC',
-            status: 'successful',
-            detail: 'Detail'
+            activity: 'wallet',
+            detail: 'Funded wallet',
+            charge: 10000,
+            balance: 160075
           },
           {
-            id: '003',
+            id: 3,
+            tx: 'debit',
             date: '24 Dec 2020',
-            service: 'AUTH',
-            status: 'pending',
-            detail: 'Detail'
+            activity: 'charge',
+            detail: 'Charge for VBN request: 222***234',
+            charge: 10,
+            balance: 150075
           },
           {
-            id: '004',
+            id: 4,
+            tx: 'credit',
             date: '24 Dec 2020',
-            service: 'AUTH',
-            status: 'successful',
-            detail: 'Detail'
+            activity: 'wallet',
+            detail: 'Funded wallet',
+            charge: 10000,
+            balance: 160075
           },
           {
-            id: '005',
+            id: 5,
+            tx: 'debit',
             date: '24 Dec 2020',
-            service: 'NIN',
-            status: 'failed',
-            detail: 'Detail'
+            activity: 'charge',
+            detail: 'Charge for VBN request: 222***234',
+            charge: 10,
+            balance: 150075
           },
           {
-            id: '006',
+            id: 6,
+            tx: 'credit',
             date: '24 Dec 2020',
-            service: 'BVN',
-            status: 'successful',
-            detail: 'Detail'
+            activity: 'wallet',
+            detail: 'Funded wallet',
+            charge: 10000,
+            balance: 160075
           },
           {
-            id: '007',
+            id: 7,
+            tx: 'debit',
             date: '24 Dec 2020',
-            service: 'CAC',
-            status: 'successful',
-            detail: 'Detail'
+            activity: 'charge',
+            detail: 'Charge for VBN request: 222***234',
+            charge: 10,
+            balance: 150075
           },
           {
-            id: '008',
+            id: 8,
+            tx: 'credit',
             date: '24 Dec 2020',
-            service: 'AUTH',
-            status: 'pending',
-            detail: 'Detail'
-          },
-          {
-            id: '009',
-            date: '24 Dec 2020',
-            service: 'AUTH',
-            status: 'successful',
-            detail: 'Detail'
-          },
-          {
-            id: '010',
-            date: '24 Dec 2020',
-            service: 'NIN',
-            status: 'failed',
-            detail: 'Detail'
+            activity: 'wallet',
+            detail: 'Funded wallet',
+            charge: 10000,
+            balance: 160075
           }
         ]
-      },
-      showRequest: false,
-      request: {}
+      }
     }
   },
-  methods: {
-    showReport (id) {
-      this.$router.push({ name: 'reports.report', params: { id } })
-    }
-  }
+  methods: {}
 }
 </script>
 
 <style lang="scss" scoped>
-.rd-stack {
-  p:last-child {
-    font-size: 0.875rem;
-    opacity: 0.8;
-    margin-top: 5px;
+.rd-transaction {
+  height: 40px;
+  width: 40px;
+  border-radius: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  &.credit {
+    background: #36AFA415;
+    color: #36AFA4;
+  }
+
+  &.debit {
+    background: #D0516915;
+    color: #D05169;
   }
 }
 </style>

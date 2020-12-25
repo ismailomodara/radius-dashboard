@@ -15,6 +15,8 @@ const AuthX = () => import('@/pages/authx/index.vue')
 const Reports = () => import('@/pages/reports/index')
 const Report = () => import('@/pages/reports/id')
 
+const Billings = () => import('@/pages/billings/index.vue')
+
 const Settings = () => import('@/pages/settings/index')
 
 Vue.use(VueRouter)
@@ -104,6 +106,15 @@ const routes = [
     path: '/reports/:id',
     name: 'reports.report',
     component: Report,
+    meta: {
+      guest: true,
+      layout: 'app'
+    }
+  },
+  {
+    path: '/billings',
+    name: 'billings.index',
+    component: Billings,
     meta: {
       guest: true,
       layout: 'app'

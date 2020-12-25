@@ -1,7 +1,7 @@
 export default {
   methods: {
     formatPrice (value) {
-      return value ? `₦${Number(value).toLocaleString()}` : '₦0'
+      return value ? `₦${Number(value).toLocaleString()}.00` : '₦0'
     },
     formatFigure (value) {
       return Number(value).toLocaleString()

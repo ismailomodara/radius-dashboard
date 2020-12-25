@@ -1,136 +1,126 @@
 <template>
   <div v-loading.fullscreen="loading">
     <el-row type="flex">
-      <el-col :span="24">
-        <card>
-          <template slot="header">
-            <h5>Profile</h5>
-          </template>
+      <el-col :lg="20" class="mx-auto">
+        <card :header="false">
           <template slot="content">
-            <el-row type="flex" :gutter="80" class="flex-wrap">
+            <el-row type="flex" :gutter="80" class="flex-wrap mb-2">
               <el-col :md="8" :lg="8">
-                <div class="is-flex is-justify-center is-align-center h-100">
-                  <avatar :size="120" />
+                <div class="rd-form--section">
+                  <h6>Live: API Configuration</h6>
                 </div>
               </el-col>
               <el-col :md="16" :lg="16">
-                <el-form :model="form">
-                  <el-row type="flex" :gutter="20" class="flex-wrap">
-                    <el-col :md="12" :lg="12">
-                      <el-form-item
-                        label="First name"
-                        prop="first_name"
-                        :rules="inputField()">
-                        <el-input
-                          v-model="form.first_name"
-                        />
-                      </el-form-item>
-                    </el-col>
-                    <el-col :md="12" :lg="12">
-                      <el-form-item
-                        label="Last name"
-                        prop="last_name"
-                        :rules="inputField()">
-                        <el-input
-                          v-model="form.last_name"
-                        />
-                      </el-form-item>
-                    </el-col>
-                  </el-row>
-                  <el-row type="flex" :gutter="20" class="flex-wrap">
-                    <el-col :md="16" :lg="16">
-                      <el-form-item
-                        label="Email"
-                        prop="email"
-                        :rules="emailField()">
-                        <el-input
-                          v-model="form.email"
-                        />
-                      </el-form-item>
-                    </el-col>
-                    <el-col :md="8" :lg="8">
-                      <el-form-item
-                        label="Phone number"
-                        prop="phone_number"
-                        :rules="inputField()">
-                        <el-input
-                          v-model="form.phone_number"
-                        />
-                      </el-form-item>
-                    </el-col>
-                  </el-row>
-                  <el-row type="flex" :gutter="20" class="flex-wrap">
+                <el-form :model="live" label-position="top">
+                  <el-row type="flex">
                     <el-col :span="24">
                       <el-form-item
-                        label="Address" prop="address" :rules="inputField()">
-                        <el-input v-model="form.address" type="textarea" rows="5" />
+                        label="Secret Key"
+                        prop="secretKey">
+                        <el-input
+                          v-model="live.secretKey"
+                          readonly
+                        />
+                        <div class="is-flex is-justify-end">
+                          <p class="text-primary text-cursor">Generate a new secret key</p>
+                        </div>
                       </el-form-item>
                     </el-col>
                   </el-row>
-                  <div class="is-flex is-justify-center">
-                    <el-button type="primary">Save changes</el-button>
-                  </div>
+                  <el-row type="flex">
+                    <el-col :span="24">
+                      <el-form-item
+                        label="Public Key"
+                        prop="publicKey">
+                        <el-input
+                          v-model="live.publicKey"
+                          readonly
+                        />
+                      </el-form-item>
+                    </el-col>
+                  </el-row>
+                  <el-row type="flex" :gutter="20">
+                    <el-col :md="12">
+                      <el-form-item
+                        label="Callback URL"
+                        prop="callbackURL">
+                        <el-input
+                          v-model="live.callbackURL"
+                          readonly
+                        />
+                      </el-form-item>
+                    </el-col>
+                    <el-col :md="12">
+                      <el-form-item
+                        label="Webhook URL"
+                        prop="webhookURL">
+                        <el-input
+                          v-model="live.webhookURL"
+                          readonly
+                        />
+                      </el-form-item>
+                    </el-col>
+                  </el-row>
                 </el-form>
               </el-col>
             </el-row>
-          </template>
-        </card>
-      </el-col>
-    </el-row>
-    <el-row type="flex">
-      <el-col :span="24">
-        <card>
-          <template slot="header">
-            <h5>Security</h5>
-          </template>
-          <template slot="content">
             <el-row type="flex" :gutter="80" class="flex-wrap">
-              <el-col :md="10" :lg="10">
-                <div class="is-flex is-justify-center is-align-center h-100">
-                  <img :src="getImage('security.svg')" alt="" :style="{ height: '200px'}" />
+              <el-col :md="8" :lg="8">
+                <div class="rd-form--section">
+                  <h6>Test: API Configuration</h6>
                 </div>
               </el-col>
-              <el-col :md="12" :lg="12">
-                <el-form :model="security">
+              <el-col :md="16" :lg="16">
+                <el-form :model="test" label-position="top">
                   <el-row type="flex">
                     <el-col :span="24">
                       <el-form-item
-                        label="Current password"
-                        prop="current_pwd"
-                        :rules="inputField()">
+                        label="Secret Key"
+                        prop="secretKey">
                         <el-input
-                          v-model="security.current_pwd"
+                          v-model="test.secretKey"
+                          readonly
                         />
+                        <div class="is-flex is-justify-end">
+                          <p class="text-primary text-cursor">Generate a new secret key</p>
+                        </div>
                       </el-form-item>
                     </el-col>
                   </el-row>
                   <el-row type="flex">
                     <el-col :span="24">
                       <el-form-item
-                        label="New password"
-                        prop="new_pwd"
-                        :rules="inputField()">
+                        label="Public Key"
+                        prop="publicKey">
                         <el-input
-                          v-model="security.new_pwd"
+                          v-model="test.publicKey"
+                          readonly
                         />
                       </el-form-item>
                     </el-col>
                   </el-row>
-                  <el-row type="flex">
-                    <el-col :span="24">
+                  <el-row type="flex" :gutter="20">
+                    <el-col :md="12">
                       <el-form-item
-                        label="Confirm new password"
-                        prop="confirm_new_pwd"
-                        :rules="inputField()">
+                        label="Callback URL"
+                        prop="callbackURL">
                         <el-input
-                          v-model="security.confirm_new_pwd"
+                          v-model="test.callbackURL"
+                          readonly
+                        />
+                      </el-form-item>
+                    </el-col>
+                    <el-col :md="12">
+                      <el-form-item
+                        label="Webhook URL"
+                        prop="webhookURL">
+                        <el-input
+                          v-model="test.webhookURL"
+                          readonly
                         />
                       </el-form-item>
                     </el-col>
                   </el-row>
-                  <div class="is-flex is-justify-center">
-                    <el-button type="primary">Save changes</el-button>
-                  </div>
                 </el-form>
               </el-col>
             </el-row>
@@ -147,22 +137,47 @@ export default {
   data () {
     return {
       loading: false,
-      form: {
-        first_name: '',
-        last_name: '',
-        email: '',
-        phone_number: '',
-        address: ''
+      live: {
+        secretKey: '',
+        publicKey: '',
+        callbackURL: '',
+        webhookURL: ''
       },
-      security: {
-        current_pwd: '',
-        new_pwd: '',
-        confirm_new_pwd: ''
+      test: {
+        secretKey: '',
+        publicKey: '',
+        callbackURL: '',
+        webhookURL: ''
       }
     }
   },
-  computed: {}
+  computed: {},
+  methods: {
+    verify () {
+      //
+    }
+  }
 }
 </script>
 
-<style></style>
+<style lang="scss" scoped>
+.rd-form--section {
+  h6 {
+    font-size: 1rem;
+    font-weight: 500;
+    margin-left: 20px;
+    position: relative;
+
+    &::before {
+      content: "";
+      position: absolute;
+      top: 50%;
+      left: -20px;
+      transform: translateY(-50%);
+      background: var(--primary);
+      height: 10px;
+      width: 10px;
+    }
+  }
+}
+</style>

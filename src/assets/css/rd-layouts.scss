@@ -233,7 +233,7 @@ a, a:hover {
 }
 
 .text-cursor {
-  cursor: pointer;
+  cursor: pointer !important;
 }
 
 .rd-page--section:not(:last-child) {
