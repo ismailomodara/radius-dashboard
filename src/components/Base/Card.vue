@@ -33,7 +33,7 @@ export default {
 
   .rd-card--heading {
     min-height: 40px;
-    margin-bottom: 10px;
+    margin-bottom: 20px;
     display: flex;
     align-items: center;
     justify-content: space-between;

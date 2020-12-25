@@ -10,6 +10,8 @@ const AccountVerification = () => import('@/pages/dashboard/verify.vue')
 const Verifications = () => import('@/pages/verifications/index.vue')
 const IdVerification = () => import('@/pages/verifications/verify.vue')
 
+const AuthX = () => import('@/pages/authx/index.vue')
+
 const Reports = () => import('@/pages/reports/index')
 const Report = () => import('@/pages/reports/id')
 
@@ -75,6 +77,15 @@ const routes = [
     path: '/verifications/verify-id',
     name: 'verifications.verify',
     component: IdVerification,
+    meta: {
+      guest: true,
+      layout: 'app'
+    }
+  },
+  {
+    path: '/authx/',
+    name: 'authx.index',
+    component: AuthX,
     meta: {
       guest: true,
       layout: 'app'

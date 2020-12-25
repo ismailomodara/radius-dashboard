@@ -4,7 +4,7 @@
       <el-col :span="24">
         <card>
           <template slot="header">
-            <h5>Verified IDs</h5>
+            <h5>Verified Ids</h5>
             <div class="is-flex is-align-center is-justify-end">
               <el-input
                 v-model="search"
