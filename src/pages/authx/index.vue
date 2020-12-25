@@ -20,7 +20,7 @@
                   </div>
                 </el-col>
                 <el-col :md="16" :lg="16">
-                  <el-row type="flex" :gutter="40" class="flex-wrap">
+                  <el-row type="flex" :gutter="40" class="flex-wrap mb-1">
                     <el-col :md="12">
                       <el-form-item
                         label="Company Logo"
@@ -45,7 +45,7 @@
                       </el-form-item>
                     </el-col>
                   </el-row>
-                  <el-row type="flex" :gutter="20" class="flex-wrap">
+                  <el-row type="flex" :gutter="20" class="flex-wrap mb-1">
                     <el-col :span="24">
                       <el-form-item
                         label="ID Document Verification"
@@ -61,8 +61,48 @@
                       </el-form-item>
                     </el-col>
                   </el-row>
+                  <el-row type="flex" :gutter="20" class="flex-wrap mb-1">
+                    <el-col :span="24">
+                      <el-form-item
+                        label="Do you want to collect any extra information?"
+                        :rules="inputField()">
+                        <div v-for="(field, index) in form.extraFields" :key="index" class="extra-field">
+                          <el-row type="flex" align="middle" :gutter="20">
+                            <el-col :md="16">
+                              <el-input
+                                v-model="field.name"
+                                type="text"
+                                placeholder="Name of Field"
+                                class="mr-1" />
+                            </el-col>
+                            <el-col :md="8" class="is-flex is-align-center">
+                              <el-select v-model="field.type" placeholder="Field type">
+                                <el-option
+                                  v-for="(field, index) in extraFields"
+                                  :key="index"
+                                  :label="field"
+                                  :value="field.toLowerCase()"></el-option>
+                              </el-select>
+                              <div class="remove-extra--field" @click="removeField(index)"><i class="rd-icon--x-circle"></i> </div>
+                            </el-col>
+                          </el-row>
+                          <el-row v-if="field.type && !field.type.includes('text')" type="flex" class="extra-field--options">
+                            <el-col :span="24">
+                              <el-input
+                                v-model="field.option"
+                                type="text"
+                                placeholder="Enter options separated by comma (Option 1, Option 2)" />
+                            </el-col>
+                          </el-row>
+                        </div>
+                        <div class="add-extra--field">
+                          <p @click="addField"><i class="rd-icon--plus-circle"></i> Add New Field</p>
+                        </div>
+                      </el-form-item>
+                    </el-col>
+                  </el-row>
                   <div class="is-flex is-justify-center">
-                    <el-button type="primary" @click="next">Save changes</el-button>
+                    <el-button type="primary" @click="save">Save changes</el-button>
                   </div>
                 </el-col>
               </el-row>
@@ -85,16 +125,28 @@ export default {
         companyLogo: '',
         mfa: false,
         ids: [],
-        extraField: [
+        extraFields: [
           {
             name: '',
-            type: ''
+            type: '',
+            options: ''
           }
         ]
-      }
+      },
+      extraFields: ['Text', 'Textarea', 'Dropdown', 'Radio', 'Checkbox']
     }
   },
   methods: {
+    addField () {
+      this.form.extraFields.push({
+        name: '',
+        type: '',
+        options: ''
+      })
+    },
+    removeField (index) {
+      this.form.extraFields.splice(index, 1)
+    },
     save () {
       //
     }
@@ -102,4 +154,36 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.extra-field {
+  background: #14050810;
+  border-radius: 8px;
+  padding: 15px;
+  margin-bottom: 5px;
+}
+
+.extra-field--options {
+  margin-top: 7px;
+}
+
+.add-extra--field {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 10px 0;
+
+  p {
+    cursor: pointer;
+  }
+
+  i {
+    margin-right: 5px;
+  }
+}
+
+.remove-extra--field {
+  cursor: pointer;
+  margin-left: 10px;
+  margin-top: 5px;
+}
+</style>

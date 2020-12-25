@@ -1,19 +1,25 @@
 <template>
   <div>
+    <div class="rd-page--section">
+      <el-row type="flex">
+        <el-col :span="24">
+          <h6>Verified IDs</h6>
+        </el-col>
+      </el-row>
+    </div>
     <el-row type="flex">
       <el-col :span="24">
         <card>
           <template slot="header">
-            <h5>Verified Ids</h5>
-            <div class="is-flex is-align-center is-justify-end">
+            <div class="w-100 is-flex is-align-center is-justify-between">
               <el-input
                 v-model="search"
                 type="text"
-                placeholder="Search"
+                placeholder="Search for ID"
                 suffix-icon="rd-icon--search"
                 class="search mr-1"
                 :disabled="!pageData.data.length" />
-              <el-button type="primary" size="medium" @click="verifyId">Verify Id</el-button>
+              <el-button type="primary" size="medium" @click="verifyId">Verify New Id</el-button>
             </div>
           </template>
           <template slot="content">
