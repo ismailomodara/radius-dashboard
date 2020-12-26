@@ -72,7 +72,7 @@
                               <el-input
                                 v-model="field.name"
                                 type="text"
-                                placeholder="Name of Field"
+                                placeholder="Name of field"
                                 class="mr-1" />
                             </el-col>
                             <el-col :md="8" class="is-flex is-align-center">
