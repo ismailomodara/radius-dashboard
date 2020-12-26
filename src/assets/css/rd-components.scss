@@ -378,3 +378,37 @@
     font-size: 1rem;
   }
 }
+
+/**
+**
+** Radio
+**
+ */
+
+.rd-radio {
+  width: 100%;
+  background: #798B8315;
+  padding: 4px;
+  border-radius: 4px;
+
+  .el-radio-button {
+    width: 50%;
+
+    .el-radio-button__inner {
+      width: 100%;
+      border: none !important;
+      background: transparent;
+      color: #57645E;
+      box-shadow: none;
+      transition: font-weight 0.2s ease-in;
+      padding: 10px 20px;
+    }
+
+    .el-radio-button__orig-radio:checked + .el-radio-button__inner {
+      color: #D05169;
+      background: #fff;
+      font-weight: 500;
+      transition: font-weight 0.2s ease-out;
+    }
+  }
+}

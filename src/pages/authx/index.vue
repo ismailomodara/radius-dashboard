@@ -89,7 +89,7 @@
                           <el-row v-if="field.type && !field.type.includes('text')" type="flex" class="extra-field--options">
                             <el-col :span="24">
                               <el-input
-                                v-model="field.option"
+                                v-model="field.options"
                                 type="text"
                                 placeholder="Enter options separated by comma (Option 1, Option 2)" />
                             </el-col>
@@ -110,14 +110,18 @@
           </template>
         </card>
       </el-tab-pane>
-      <el-tab-pane label="Preview" name="preview">Preview</el-tab-pane>
+      <el-tab-pane label="Preview" name="preview">
+        <form-preview :form="form" />
+      </el-tab-pane>
     </el-tabs>
   </div>
 </template>
 
 <script>
+import FormPreview from '@/components/AuthX/FormPreview'
 export default {
   name: 'AuthX',
+  components: { FormPreview },
   data () {
     return {
       activeTab: 'create',
@@ -129,6 +133,7 @@ export default {
           {
             name: '',
             type: '',
+            value: '',
             options: ''
           }
         ]
@@ -141,6 +146,7 @@ export default {
       this.form.extraFields.push({
         name: '',
         type: '',
+        value: '',
         options: ''
       })
     },
@@ -159,7 +165,7 @@ export default {
   background: #14050810;
   border-radius: 8px;
   padding: 15px;
-  margin-bottom: 5px;
+  margin-bottom: 10px;
 }
 
 .extra-field--options {
