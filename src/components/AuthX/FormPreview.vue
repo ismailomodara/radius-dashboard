@@ -119,8 +119,7 @@
                       <el-form-item label="Email">
                         <el-input
                           v-model="login.email"
-                          type="text"
-                          readonly />
+                          type="text" />
                       </el-form-item>
                     </el-col>
                   </el-row>
@@ -129,8 +128,7 @@
                       <el-form-item label="Password">
                         <el-input
                           v-model="login.password"
-                          type="password"
-                          readonly />
+                          type="password" />
                       </el-form-item>
                     </el-col>
                   </el-row>

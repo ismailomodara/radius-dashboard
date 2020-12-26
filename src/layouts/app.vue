@@ -64,13 +64,25 @@
           <slot />
         </transition>
       </el-container>
+      <div v-if="showFundWalletCTA" class="rd-fund--wallet">
+        <div class="balance">
+          <span>Balance</span>
+          <h6>{{ formatPrice(15070) }}</h6>
+        </div>
+        <div class="fund" @click="showFundWallet = true">
+          <i class="rd-icon--plus"></i>
+        </div>
+      </div>
     </div>
+    <fund-wallet :show.sync="showFundWallet" />
   </div>
 </template>
 
 <script>
+import FundWallet from '@/components/Wallet/Fund'
 export default {
   name: 'AppLayout',
+  components: { FundWallet },
   data () {
     return {
       userActive: true,
@@ -106,12 +118,16 @@ export default {
           label: 'Settings',
           name: 'settings'
         }
-      ]
+      ],
+      showFundWallet: false
     }
   },
   computed: {
     userName () {
       return 'Snubby Pay'
+    },
+    showFundWalletCTA () {
+      return !this.$route.path.includes('dashboard')
     }
   },
   mounted () {
@@ -227,6 +243,41 @@ export default {
   .rd-dashboard--body {
     margin-top: calc(15vh + 80px);
     padding: 60px 0;
+    position: relative;
+
+    .rd-fund--wallet {
+      background: #36AFA4;
+      position: fixed;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: -8px 32px 50px rgba(0, 0, 0, 0.08);
+      right: 40px;
+      bottom: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+
+      .balance {
+        margin-right: 80px;
+
+        h6, span {
+          color: #fff;
+        }
+      }
+
+      .fund {
+        border-radius: 100%;
+        background: #ffffff;
+        color: #36AFA4;
+        font-weight: 600;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 10px;
+        box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
+        cursor: pointer;
+      }
+    }
   }
 }
 

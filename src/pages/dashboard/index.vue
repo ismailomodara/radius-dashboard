@@ -17,7 +17,7 @@
       <el-row type="flex" class="flex-wrap" :gutter="40">
         <el-col :xs="24" :sm="12" :md="12" :lg="12">
           <summary-card label="Wallet Balance" :value="formatPrice(walletBalance)">
-            <el-button type="success">Fund</el-button>
+            <el-button type="success" @click="showFundWallet = true">Fund</el-button>
           </summary-card>
         </el-col>
         <el-col :xs="24" :sm="12" :md="12" :lg="12">
@@ -38,23 +38,27 @@
     <div class="rd-page--section">
       <recent-requests />
     </div>
+    <fund-wallet :show.sync="showFundWallet" />
   </div>
 </template>
 
 <script>
 import RequestsChart from '@/components/Requests/RequestsChart'
 import RecentRequests from '@/components/Requests/RecentRequests'
+import FundWallet from '@/components/Wallet/Fund'
 
 export default {
   name: 'Dashboard',
   components: {
+    FundWallet,
     RecentRequests,
     RequestsChart
   },
   data () {
     return {
       loading: false,
-      walletBalance: 150500
+      walletBalance: 150500,
+      showFundWallet: false
     }
   },
   computed: {
