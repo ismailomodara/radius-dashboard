@@ -87,9 +87,10 @@
                         </el-col>
                       </el-row>
                     </template>
+                    <p class="text-muted text-center mb-1">By signing up, you agree to our terms of service and privacy policy</p>
                     <el-row type="flex">
                       <el-col :span="24">
-                        <el-button class="w-100" type="primary">Next</el-button>
+                        <el-button class="w-100" type="primary" @click="signupStep = 2">Next</el-button>
                       </el-col>
                     </el-row>
                   </template>
