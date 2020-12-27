@@ -86,7 +86,7 @@
                               <div class="remove-extra--field" @click="removeField(index)"><i class="rd-icon--x-circle"></i> </div>
                             </el-col>
                           </el-row>
-                          <el-row v-if="field.type && !field.type.includes('text')" type="flex" class="extra-field--options">
+                          <el-row v-if="fieldWithOptions(field.type)" type="flex" class="extra-field--options">
                             <el-col :span="24">
                               <el-input
                                 v-model="field.options"
@@ -138,10 +138,14 @@ export default {
           }
         ]
       },
-      extraFields: ['Text', 'Textarea', 'Dropdown', 'Radio', 'Checkbox']
+      extraFields: ['Text', 'Textarea', 'Dropdown', 'Radio', 'Checkbox', 'Datepicker']
     }
   },
   methods: {
+    fieldWithOptions (field) {
+      const fields = ['dropdown', 'radio', 'checkbox']
+      return fields.includes(field)
+    },
     addField () {
       this.form.extraFields.push({
         name: '',

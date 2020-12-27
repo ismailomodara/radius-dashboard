@@ -83,6 +83,10 @@
                                 v-for="(option, index) in field.options.split(',')"
                                 :key="index" :label="option" />
                             </el-checkbox-group>
+                            <el-date-picker
+                              v-else-if="field.type === 'datepicker'"
+                              v-model="field.value"
+                              value-format="yyyy-MM-dd" />
                           </el-form-item>
                         </el-col>
                       </el-row>
