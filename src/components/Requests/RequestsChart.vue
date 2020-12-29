@@ -1,16 +1,12 @@
 <template>
-  <el-row type="flex">
-    <el-col :span="24">
-      <card>
-        <template slot="header">
-          Number of Requests (This week)
-        </template>
-        <template slot="content">
-          <line-chart :data="requestChart.data" :labels="requestChart.labels" />
-        </template>
-      </card>
-    </el-col>
-  </el-row>
+  <card>
+    <template slot="header">
+      Total Requests
+    </template>
+    <template slot="content">
+      <line-chart :data="requestChart.data" :labels="requestChart.labels" />
+    </template>
+  </card>
 </template>
 
 <script>

@@ -21,19 +21,23 @@
           </summary-card>
         </el-col>
         <el-col :xs="24" :sm="12" :md="12" :lg="12">
-          <summary-card :label="requests[0].label" :value="requests[0].value" />
+          <summary-card label="Total Requests" :value="formatFigureToK(totalRequests)" />
         </el-col>
       </el-row>
     </div>
     <div class="rd-page--section">
-      <el-row type="flex" class="flex-wrap" :gutter="40">
-        <el-col v-for="(request, i) in requests.slice(1)" :key="i" :xs="24" :sm="12" :md="8" :lg="8">
-          <summary-card :label="request.label" :value="request.value" />
+      <el-row type="flex" class="flex-wrap" :gutter="20">
+        <el-col :lg="12">
+          <requests-chart />
+        </el-col>
+        <el-col :lg="12">
+          <el-row type="flex" class="flex-wrap" :gutter="40">
+            <el-col v-for="(request, i) in requests" :key="i" :xs="24" :sm="12" :md="12" :lg="12">
+              <summary-card :label="request.label" :value="request.value" />
+            </el-col>
+          </el-row>
         </el-col>
       </el-row>
-    </div>
-    <div class="rd-page--section">
-      <requests-chart />
     </div>
     <div class="rd-page--section">
       <recent-requests />
@@ -58,6 +62,7 @@ export default {
     return {
       loading: false,
       walletBalance: 150500,
+      totalRequests: 1850,
       showFundWallet: false
     }
   },
@@ -65,20 +70,20 @@ export default {
     requests () {
       return [
         {
-          label: 'Total Requests',
-          value: this.formatFigure(3700)
+          label: 'Users',
+          value: this.formatFigureToK(1850)
         },
         {
-          label: 'Successful Requests',
-          value: this.formatFigure(2750)
+          label: 'New SignUps',
+          value: this.formatFigureToK(1850)
         },
         {
-          label: 'Pending Requests',
-          value: this.formatFigure(200)
+          label: 'ID Verifications',
+          value: this.formatFigureToK(1850)
         },
         {
-          label: 'Failed Requests',
-          value: this.formatFigure(700)
+          label: 'Authentications',
+          value: this.formatFigureToK(1850)
         }
       ]
     }

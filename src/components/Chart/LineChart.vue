@@ -2,7 +2,7 @@
   <line-chart-instance
     :chart-data.sync="chartData"
     :options.sync="chartOptions"
-    :height="280"
+    :height="205"
   />
 </template>
 
