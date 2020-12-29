@@ -11,6 +11,8 @@ const Verifications = () => import('@/pages/verifications/index.vue')
 const IdVerification = () => import('@/pages/verifications/verify.vue')
 
 const AuthX = () => import('@/pages/authx/index.vue')
+const AuthXCreate = () => import('@/pages/authx/create.vue')
+const AuthXEdit = () => import('@/pages/authx/edit.vue')
 
 const Reports = () => import('@/pages/reports/index')
 const Report = () => import('@/pages/reports/id')
@@ -88,6 +90,24 @@ const routes = [
     path: '/authx/',
     name: 'authx.index',
     component: AuthX,
+    meta: {
+      guest: true,
+      layout: 'app'
+    }
+  },
+  {
+    path: '/authx/create',
+    name: 'authx.create',
+    component: AuthXCreate,
+    meta: {
+      guest: true,
+      layout: 'app'
+    }
+  },
+  {
+    path: '/authx/edit/:id',
+    name: 'authx.edit',
+    component: AuthXEdit,
     meta: {
       guest: true,
       layout: 'app'

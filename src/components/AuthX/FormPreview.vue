@@ -30,9 +30,24 @@
                   <template v-if="signupStep === 1">
                     <el-row type="flex">
                       <el-col :span="24">
-                        <el-form-item label="Email">
+                        <el-form-item label="ID">
+                          <el-select
+                            v-model="signup.id"
+                            placeholder="Select ID type">
+                            <el-option
+                              v-for="(id, index) in form.ids"
+                              :key="index"
+                              :label="id"
+                              :value="id"/>
+                          </el-select>
+                        </el-form-item>
+                      </el-col>
+                    </el-row>
+                    <el-row type="flex">
+                      <el-col :span="24">
+                        <el-form-item label="Username">
                           <el-input
-                            v-model="signup.email"
+                            v-model="signup.username"
                             type="text" />
                         </el-form-item>
                       </el-col>
@@ -118,29 +133,47 @@
               </template>
               <template v-else>
                 <el-form :model="login" label-position="top">
-                  <el-row type="flex">
-                    <el-col :span="24">
-                      <el-form-item label="Email">
-                        <el-input
-                          v-model="login.email"
-                          type="text" />
-                      </el-form-item>
-                    </el-col>
-                  </el-row>
-                  <el-row type="flex">
-                    <el-col :span="24">
-                      <el-form-item label="Password">
-                        <el-input
-                          v-model="login.password"
-                          type="password" />
-                      </el-form-item>
-                    </el-col>
-                  </el-row>
-                  <el-row type="flex">
-                    <el-col :span="24">
-                      <el-button class="w-100" type="primary">Login</el-button>
-                    </el-col>
-                  </el-row>
+                  <template v-if="loginStep === 1">
+                    <el-row type="flex">
+                      <el-col :span="24">
+                        <el-form-item label="Username">
+                          <el-input
+                            v-model="login.username"
+                            type="text" />
+                        </el-form-item>
+                      </el-col>
+                    </el-row>
+                    <el-row type="flex">
+                      <el-col :span="24">
+                        <el-form-item label="Password">
+                          <el-input
+                            v-model="login.password"
+                            type="password" />
+                        </el-form-item>
+                      </el-col>
+                    </el-row>
+                    <el-row type="flex">
+                      <el-col :span="24">
+                        <el-button class="w-100" type="primary" @click="loginStep = 2">Login</el-button>
+                      </el-col>
+                    </el-row>
+                  </template>
+                  <template v-else-if="loginStep === 2">
+                    <el-row type="flex">
+                      <el-col :span="24">
+                        <el-form-item label="OTP">
+                          <el-input
+                            v-model="login.otp"
+                            type="text" />
+                        </el-form-item>
+                      </el-col>
+                    </el-row>
+                    <el-row type="flex">
+                      <el-col :span="24">
+                        <el-button class="w-100" type="primary">Verify</el-button>
+                      </el-col>
+                    </el-row>
+                  </template>
                 </el-form>
               </template>
             </div>
@@ -165,13 +198,16 @@ export default {
       nav: 'signup',
       signupStep: 1,
       signup: {
-        email: '',
+        id: '',
+        username: '',
         password: '',
         otp: ''
       },
+      loginStep: 1,
       login: {
-        email: '',
-        password: ''
+        username: '',
+        password: '',
+        otp: ''
       }
     }
   },
