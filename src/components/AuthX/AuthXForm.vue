@@ -124,6 +124,18 @@
 import FormPreview from './FormPreview'
 export default {
   name: 'AuthXForm',
+  props: {
+    action: {
+      type: String,
+      default: 'add'
+    },
+    authx: {
+      type: Object,
+      default () {
+        return {}
+      }
+    }
+  },
   components: { FormPreview },
   data () {
     return {
@@ -163,6 +175,11 @@ export default {
     },
     save () {
       //
+    }
+  },
+  created () {
+    if (this.action === 'edit') {
+      this.form = { ...this.authx }
     }
   }
 }

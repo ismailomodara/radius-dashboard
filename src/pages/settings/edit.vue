@@ -2,16 +2,15 @@
   <div>
     <div class="rd-page--section">
       <el-row type="flex">
-        <el-col :span="24">
-          <h6>Create New AuthX</h6>
-          <p>Create a secure & beautiful login pages to easily authenticate and onboard your users.</p>
+        <el-col :span="20" class="mx-auto">
+          <h6>Edit API Key</h6>
         </el-col>
       </el-row>
     </div>
     <div class="rd-page--section">
       <el-row type="flex">
         <el-col :span="24">
-          <auth-x-form />
+          <api-key-form />
         </el-col>
       </el-row>
     </div>
@@ -20,10 +19,10 @@
 </template>
 
 <script>
-import AuthXForm from '@/components/AuthX/AuthXForm'
+import ApiKeyForm from '@/components/Settings/ApiKeyForm'
 export default {
-  name: 'AuthXCreate',
-  components: { AuthXForm },
+  name: 'APIEdit',
+  components: { ApiKeyForm },
   data () {
     return {}
   }

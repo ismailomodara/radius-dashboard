@@ -1,25 +1,27 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 
-const Login = () => import('@/pages/login.vue')
-const Register = () => import('@/pages/register.vue')
+const Login = () => import('@/pages/login')
+const Register = () => import('@/pages/register')
 
-const Dashboard = () => import('@/pages/dashboard/index.vue')
-const AccountVerification = () => import('@/pages/dashboard/verify.vue')
+const Dashboard = () => import('@/pages/dashboard/index')
+const AccountVerification = () => import('@/pages/dashboard/verify')
 
-const Verifications = () => import('@/pages/verifications/index.vue')
-const IdVerification = () => import('@/pages/verifications/verify.vue')
+const Verifications = () => import('@/pages/verifications/index')
+const IdVerification = () => import('@/pages/verifications/verify')
 
-const AuthX = () => import('@/pages/authx/index.vue')
-const AuthXCreate = () => import('@/pages/authx/create.vue')
-const AuthXEdit = () => import('@/pages/authx/edit.vue')
+const AuthX = () => import('@/pages/authx/index')
+const AuthXCreate = () => import('@/pages/authx/create')
+const AuthXEdit = () => import('@/pages/authx/edit')
 
 const Reports = () => import('@/pages/reports/index')
 const Report = () => import('@/pages/reports/id')
 
-const Billings = () => import('@/pages/billings/index.vue')
+const Billings = () => import('@/pages/billings/index')
 
 const Settings = () => import('@/pages/settings/index')
+const ApiCreate = () => import('@/pages/settings/create')
+const ApiEdit = () => import('@/pages/settings/edit')
 
 Vue.use(VueRouter)
 
@@ -55,7 +57,7 @@ const routes = [
     name: 'dashboard.index',
     component: Dashboard,
     meta: {
-      guest: true,
+      requiresAuth: true,
       layout: 'app'
     }
   },
@@ -64,7 +66,7 @@ const routes = [
     name: 'dashboard.verify',
     component: AccountVerification,
     meta: {
-      guest: true,
+      requiresAuth: true,
       layout: 'app'
     }
   },
@@ -73,7 +75,7 @@ const routes = [
     name: 'verifications.index',
     component: Verifications,
     meta: {
-      guest: true,
+      requiresAuth: true,
       layout: 'app'
     }
   },
@@ -82,7 +84,7 @@ const routes = [
     name: 'verifications.verify',
     component: IdVerification,
     meta: {
-      guest: true,
+      requiresAuth: true,
       layout: 'app'
     }
   },
@@ -91,7 +93,7 @@ const routes = [
     name: 'authx.index',
     component: AuthX,
     meta: {
-      guest: true,
+      requiresAuth: true,
       layout: 'app'
     }
   },
@@ -100,7 +102,7 @@ const routes = [
     name: 'authx.create',
     component: AuthXCreate,
     meta: {
-      guest: true,
+      requiresAuth: true,
       layout: 'app'
     }
   },
@@ -109,7 +111,7 @@ const routes = [
     name: 'authx.edit',
     component: AuthXEdit,
     meta: {
-      guest: true,
+      requiresAuth: true,
       layout: 'app'
     }
   },
@@ -118,7 +120,7 @@ const routes = [
     name: 'reports.index',
     component: Reports,
     meta: {
-      guest: true,
+      requiresAuth: true,
       layout: 'app'
     }
   },
@@ -127,7 +129,7 @@ const routes = [
     name: 'reports.report',
     component: Report,
     meta: {
-      guest: true,
+      requiresAuth: true,
       layout: 'app'
     }
   },
@@ -136,7 +138,7 @@ const routes = [
     name: 'billings.index',
     component: Billings,
     meta: {
-      guest: true,
+      requiresAuth: true,
       layout: 'app'
     }
   },
@@ -145,7 +147,25 @@ const routes = [
     name: 'settings.index',
     component: Settings,
     meta: {
-      guest: true,
+      requiresAuth: true,
+      layout: 'app'
+    }
+  },
+  {
+    path: '/settings/api/create',
+    name: 'settings.api.create',
+    component: ApiCreate,
+    meta: {
+      requiresAuth: true,
+      layout: 'app'
+    }
+  },
+  {
+    path: '/settings/api/edit/:id',
+    name: 'settings.api.edit',
+    component: ApiEdit,
+    meta: {
+      requiresAuth: true,
       layout: 'app'
     }
   }

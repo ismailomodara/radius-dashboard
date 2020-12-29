@@ -10,10 +10,10 @@
     </div>
     <div class="rd-page--section">
       <el-row type="flex" class="flex-wrap" :gutter="40">
-        <el-col :md="6" :lg="6">
-          <div class="rd-authx" @click="editAuthX(2)">
-            <img :src="getImage('user.svg')" alt="User" />
-            <span>AuthX Name</span>
+        <el-col v-for="(auth, index) in authx" :key="index" :md="6" :lg="6">
+          <div class="rd-authx" @click="editAuthX(auth.id)">
+            <img :src="getImage(auth.image)" alt="User" />
+            <span>{{ auth.name }}</span>
           </div>
         </el-col>
         <el-col :md="6" :lg="6">
@@ -31,7 +31,15 @@
 export default {
   name: 'AuthX',
   data () {
-    return {}
+    return {
+      authx: [
+        {
+          id: 1,
+          name: 'Radius',
+          image: 'https://radius-dashboard.netlify.app/favicon.png'
+        }
+      ]
+    }
   },
   methods: {
     editAuthX (id) {
