@@ -1,12 +1,10 @@
 <template>
   <div>
     <div class="rd-page--section">
-      <el-row type="flex">
-        <el-col :span="24">
-          <h6>Create New AuthX</h6>
-          <p>Create a secure & beautiful login pages to easily authenticate and onboard your users.</p>
-        </el-col>
-      </el-row>
+      <page-header
+        heading="Create new AuthX"
+        subheading="Create a secure & beautiful login pages to easily authenticate and onboard your users."
+      />
     </div>
     <div class="rd-page--section">
       <el-row type="flex">

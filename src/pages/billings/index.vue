@@ -1,11 +1,17 @@
 <template>
   <div>
+    <div class="rd-page--section">
+      <el-row type="flex">
+        <el-col :span="24">
+          <h6>Billings</h6>
+        </el-col>
+      </el-row>
+    </div>
     <el-row type="flex">
       <el-col :span="24">
         <card>
           <template slot="header">
-            <h5>Billings</h5>
-            <div class="is-flex is-align-center is-justify-end">
+            <div class="w-100 is-flex is-align-center is-justify-between">
               <el-input
                 v-model="search"
                 type="text"

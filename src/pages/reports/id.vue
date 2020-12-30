@@ -1,5 +1,11 @@
 <template>
   <div>
+    <div class="rd-page--section">
+      <page-header
+        heading="Request Report"
+        :subheading="`Request Report for ${report.firstName} ${report.lastName}`"
+      />
+    </div>
     <el-row type="flex">
       <el-col :lg="20" class="mx-auto">
         <card :header="false">
@@ -59,8 +65,8 @@ export default {
       step: 1,
       report: {
         image: 'https://images.pexels.com/photos/3796620/pexels-photo-3796620.jpeg?auto=compress&cs=tinysrgb&dpr=3&h=750&w=1260',
-        firstName: 'Abdul',
-        lastName: 'Rahmon',
+        firstName: 'AbdulRahmon',
+        lastName: 'Shittu',
         mobile: '08011223344',
         bvn: '22223492423',
         date: '24 Dec, 2020',

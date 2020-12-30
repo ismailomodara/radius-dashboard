@@ -20,8 +20,8 @@ const Report = () => import('@/pages/reports/id')
 const Billings = () => import('@/pages/billings/index')
 
 const Settings = () => import('@/pages/settings/index')
-const ApiCreate = () => import('@/pages/settings/create')
-const ApiEdit = () => import('@/pages/settings/edit')
+const ApiCreate = () => import('@/pages/settings/api/create')
+const ApiEdit = () => import('@/pages/settings/api/edit')
 
 Vue.use(VueRouter)
 

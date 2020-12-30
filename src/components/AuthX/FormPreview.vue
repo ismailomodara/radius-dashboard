@@ -43,6 +43,15 @@
                         </el-form-item>
                       </el-col>
                     </el-row>
+                    <el-row v-if="signup.id" type="flex">
+                      <el-col :span="24">
+                        <el-form-item :label="signup.id">
+                          <el-input
+                            v-model="signup.id_number"
+                            type="text" />
+                        </el-form-item>
+                      </el-col>
+                    </el-row>
                     <el-row type="flex">
                       <el-col :span="24">
                         <el-form-item label="Username">
@@ -199,6 +208,7 @@ export default {
       signupStep: 1,
       signup: {
         id: '',
+        id_number: '',
         username: '',
         password: '',
         otp: ''

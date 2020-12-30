@@ -1,84 +1,51 @@
 <template>
-  <div class="page-header">
-    <img :src="getImage('report-header.jpg')" alt="" />
-    <div class="overlay"></div>
-    <el-container>
-      <div class="page-header--content">
-        <h1>{{ title }}</h1>
-        <p>{{ subtitle }}</p>
+  <el-row type="flex">
+    <el-col :span="24" class="is-flex is-align-center">
+      <div class="rd-back" @click="back">
+        <i class="rd-icon--arrow-left"></i>
       </div>
-    </el-container>
-  </div>
+      <div>
+        <h6>{{ heading }}</h6>
+        <p>{{ subheading }}</p>
+      </div>
+    </el-col>
+  </el-row>
 </template>
 
 <script>
 export default {
   name: 'PageHeader',
   props: {
-    title: String,
-    subtitle: String
+    heading: {
+      type: String,
+      required: true
+    },
+    subheading: {
+      type: String,
+      required: true
+    }
   },
-  data () {
-    return {}
-  },
-  computed: {},
-  created () {},
-  methods: {}
+  methods: {
+    back () {
+      this.$router.go(-1)
+    }
+  }
 }
 </script>
 
 <style scoped lang="scss">
-.page-header {
-  height: 55vh;
-  position: relative;
+.rd-back {
+  padding: 20px 20px 20px 0;
   display: flex;
-  justify-content: flex-start;
+  justify-content: center;
   align-items: center;
+  margin-right: 20px;
+  cursor: pointer;
 
-  .overlay {
-    position: absolute;
-    top: 0;
-    left: 0;
-    height: 100%;
-    width: 100%;
-    background: rgba(0, 0, 0, 0.5);
-    z-index: 10;
-  }
-
-  img {
-    position: absolute;
-    top: 0;
-    left: 0;
-    height: 100%;
-    width: 100%;
-    object-fit: cover;
-  }
-
-  .page-header--content {
-    color: #fff;
-    position: relative;
-    z-index: 11;
-
-    h1 {
-      font-size: 4rem;
-    }
-
-    p {
-      font-size: 1.5rem;
-      color: #fff;
-    }
+  i {
+    color: #140508;
+    font-weight: 600;
+    font-size: 1.2rem;
   }
 }
-
-  @media (max-width: 600px) {
-    .page-header {
-      h1 {
-        font-size: 2.5rem !important
-      }
-
-      p {
-        font-size: 1rem !important
-      }
-    }
-  }
 </style>
