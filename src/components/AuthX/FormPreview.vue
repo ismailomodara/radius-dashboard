@@ -115,7 +115,9 @@
                         </el-col>
                       </el-row>
                     </template>
-                    <p class="text-muted text-center mb-1">By signing up, you agree to our terms of service and privacy policy</p>
+                    <div class="text-center mb-1">
+                      <span class="text-muted text-small">By signing up, you agree to our terms of service and privacy policy</span>
+                    </div>
                     <el-row type="flex">
                       <el-col :span="24">
                         <el-button class="w-100" type="primary" @click="signupStep = 2">Next</el-button>
@@ -170,11 +172,39 @@
                   <template v-else-if="loginStep === 2">
                     <el-row type="flex">
                       <el-col :span="24">
-                        <el-form-item label="OTP">
+                        <div class="text-center mb-1">
+                          <span v-if="method === ''" class="text-muted text-small">
+                            We've sent a text message to - <span class="text-black">+234 812 345 6789</span>
+                          </span>
+                          <span v-else-if="method === 'resend'" class="text-muted text-small">
+                            A new code has been sent to - <span class="text-black">+234 812 345 6789</span>
+                          </span>
+                          <span v-else-if="method === 'call'" class="text-muted text-small">
+                            We've sent a 6-digit code via phone call to you - <span class="text-black">+234 812 345 6789</span>
+                          </span>
+                          <span v-else-if="method === 'dial'" class="text-muted text-small">
+                            Dial the following USSD code:
+                            <span class="text-black">888*000000#</span> with your registered mobile number -
+                            <span class="text-black">+234 812 345 6789</span>
+                          </span>
+                        </div>
+                        <el-form-item label="">
                           <el-input
                             v-model="login.otp"
-                            type="text" />
+                            type="text"
+                            placeholder="Enter OTP" />
                         </el-form-item>
+                        <el-row type="flex" :gutter="10" class="mb-1">
+                          <el-col :span="8">
+                            <el-button class="w-100" type="info" plain size="small" @click="resend">Resend Code</el-button>
+                          </el-col>
+                          <el-col :span="8">
+                            <el-button class="w-100" type="info" plain size="small" @click="call">Get a Call</el-button>
+                          </el-col>
+                          <el-col :span="8">
+                            <el-button class="w-100" type="info" plain size="small" @click="dial">Dial USSD</el-button>
+                          </el-col>
+                        </el-row>
                       </el-col>
                     </el-row>
                     <el-row type="flex">
@@ -213,12 +243,13 @@ export default {
         password: '',
         otp: ''
       },
-      loginStep: 1,
+      loginStep: 2,
       login: {
         username: '',
         password: '',
         otp: ''
-      }
+      },
+      method: ''
     }
   },
   methods: {
@@ -232,8 +263,21 @@ export default {
     removeField (index) {
       this.form.extraFields.splice(index, 1)
     },
-    save () {
-      //
+    resend () {
+      this.$message.success('A new code has been sent!')
+      setTimeout(() => {
+        this.method = 'resend'
+      }, 1000)
+    },
+    call () {
+      setTimeout(() => {
+        this.method = 'call'
+      }, 1000)
+    },
+    dial () {
+      setTimeout(() => {
+        this.method = 'dial'
+      }, 1000)
     }
   }
 }
