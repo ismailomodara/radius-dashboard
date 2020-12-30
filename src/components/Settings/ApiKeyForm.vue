@@ -50,46 +50,25 @@
               <el-row type="flex" :gutter="80" class="flex-wrap mb-2">
                 <el-col :md="8" :lg="8">
                   <div class="rd-form--section">
-                    <h6>API Key</h6>
+                    <h6>Environment</h6>
                   </div>
                 </el-col>
                 <el-col :md="16" :lg="16">
                   <el-row type="flex">
                     <el-col :span="24">
                       <el-form-item
-                        label="Key"
+                        label="Select key environment"
                         prop="key">
-                        <el-input
-                          v-model="form.key"
-                          readonly
-                        />
-                        <div class="is-flex is-justify-end">
-                        </div>
+                        <el-radio-group v-model="form.env">
+                          <el-radio label="dev" border>Development</el-radio>
+                          <el-radio label="prod" border>Production</el-radio>
+                        </el-radio-group>
                       </el-form-item>
                     </el-col>
                   </el-row>
-                  <el-row type="flex" :gutter="20">
-                    <el-col :md="12">
-                      <el-form-item
-                        label="Callback URL"
-                        prop="callbackURL">
-                        <el-input
-                          v-model="form.callbackURL"
-                          readonly
-                        />
-                      </el-form-item>
-                    </el-col>
-                    <el-col :md="12">
-                      <el-form-item
-                        label="Webhook URL"
-                        prop="webhookURL">
-                        <el-input
-                          v-model="form.webhookURL"
-                          readonly
-                        />
-                      </el-form-item>
-                    </el-col>
-                  </el-row>
+                  <div class="is-flex is-justify-end mt-1">
+                    <el-button type="primary">Save</el-button>
+                  </div>
                 </el-col>
               </el-row>
             </el-form>
@@ -126,6 +105,7 @@ export default {
             value: false
           }
         },
+        env: '',
         key: '',
         callbackURL: '',
         webhookURL: ''

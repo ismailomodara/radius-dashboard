@@ -8,11 +8,6 @@
           </div>
           <div>
             <div class="rd-user">
-              <el-switch
-                v-model="userActive"
-                active-text="Live"
-                class="mr-1">
-              </el-switch>
               <el-badge :value="3" class="mr-1" type="primary">
                 <i class="rd-icon--bell"></i>
               </el-badge>
