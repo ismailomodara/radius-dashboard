@@ -239,3 +239,23 @@ a, a:hover {
 .rd-page--section:not(:last-child) {
   margin-bottom: 40px;
 }
+
+.rd-form--section {
+  h6 {
+    font-size: 1rem;
+    font-weight: 500;
+    margin-left: 20px;
+    position: relative;
+
+    &::before {
+      content: "";
+      position: absolute;
+      top: 50%;
+      left: -20px;
+      transform: translateY(-50%);
+      background: var(--primary);
+      height: 10px;
+      width: 10px;
+    }
+  }
+}

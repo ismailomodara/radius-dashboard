@@ -31,17 +31,18 @@
                   <el-row type="flex">
                     <el-col :span="24">
                       <el-form-item
-                        label=""
+                        label="Set permissions"
                         prop="permissions">
-                        <el-radio-group v-model="form.permission">
-                          <el-radio label="full" border>Full Access</el-radio>
-                          <el-radio label="restricted" border>Restricted Access</el-radio>
-                          <el-radio label="billing" border>Billing Access</el-radio>
-                        </el-radio-group>
+                        <div>
+                          <div v-for="(item, i) in form.permissions" :key="i" class="rd-permission">
+                            <p>{{ item.label }}</p>
+                            <el-switch
+                              v-model="item.value"
+                              class="mr-1">
+                            </el-switch>
+                          </div>
+                        </div>
                       </el-form-item>
-                      <span class="rd-access--explanation">
-                        {{ access[form.permission] }}
-                      </span>
                     </el-col>
                   </el-row>
                 </el-col>
@@ -49,34 +50,21 @@
               <el-row type="flex" :gutter="80" class="flex-wrap mb-2">
                 <el-col :md="8" :lg="8">
                   <div class="rd-form--section">
-                    <h6>Production Configuration</h6>
+                    <h6>API Key</h6>
                   </div>
                 </el-col>
                 <el-col :md="16" :lg="16">
                   <el-row type="flex">
                     <el-col :span="24">
                       <el-form-item
-                        label="Secret Key"
-                        prop="secretKey">
+                        label="Key"
+                        prop="key">
                         <el-input
-                          v-model="form.prod.secretKey"
+                          v-model="form.key"
                           readonly
                         />
                         <div class="is-flex is-justify-end">
-                          <p class="text-primary text-cursor">Generate a new secret key</p>
                         </div>
-                      </el-form-item>
-                    </el-col>
-                  </el-row>
-                  <el-row type="flex">
-                    <el-col :span="24">
-                      <el-form-item
-                        label="Public Key"
-                        prop="publicKey">
-                        <el-input
-                          v-model="form.prod.publicKey"
-                          readonly
-                        />
                       </el-form-item>
                     </el-col>
                   </el-row>
@@ -86,7 +74,7 @@
                         label="Callback URL"
                         prop="callbackURL">
                         <el-input
-                          v-model="form.prod.callbackURL"
+                          v-model="form.callbackURL"
                           readonly
                         />
                       </el-form-item>
@@ -96,65 +84,7 @@
                         label="Webhook URL"
                         prop="webhookURL">
                         <el-input
-                          v-model="form.prod.webhookURL"
-                          readonly
-                        />
-                      </el-form-item>
-                    </el-col>
-                  </el-row>
-                </el-col>
-              </el-row>
-              <el-row type="flex" :gutter="80" class="flex-wrap">
-                <el-col :md="8" :lg="8">
-                  <div class="rd-form--section">
-                    <h6>Dev Configuration</h6>
-                  </div>
-                </el-col>
-                <el-col :md="16" :lg="16">
-                  <el-row type="flex">
-                    <el-col :span="24">
-                      <el-form-item
-                        label="Secret Key"
-                        prop="secretKey">
-                        <el-input
-                          v-model="form.dev.secretKey"
-                          readonly
-                        />
-                        <div class="is-flex is-justify-end">
-                          <p class="text-primary text-cursor">Generate a new secret key</p>
-                        </div>
-                      </el-form-item>
-                    </el-col>
-                  </el-row>
-                  <el-row type="flex">
-                    <el-col :span="24">
-                      <el-form-item
-                        label="Public Key"
-                        prop="publicKey">
-                        <el-input
-                          v-model="form.dev.publicKey"
-                          readonly
-                        />
-                      </el-form-item>
-                    </el-col>
-                  </el-row>
-                  <el-row type="flex" :gutter="20">
-                    <el-col :md="12">
-                      <el-form-item
-                        label="Callback URL"
-                        prop="callbackURL">
-                        <el-input
-                          v-model="form.dev.callbackURL"
-                          readonly
-                        />
-                      </el-form-item>
-                    </el-col>
-                    <el-col :md="12">
-                      <el-form-item
-                        label="Webhook URL"
-                        prop="webhookURL">
-                        <el-input
-                          v-model="form.dev.webhookURL"
+                          v-model="form.webhookURL"
                           readonly
                         />
                       </el-form-item>
@@ -178,24 +108,27 @@ export default {
       loading: false,
       form: {
         name: '',
-        permission: 'full',
-        prod: {
-          secretKey: '',
-          publicKey: '',
-          callbackURL: '',
-          webhookURL: ''
+        permissions: {
+          bvn: {
+            label: 'Bank Verification Number (BVN)',
+            value: false
+          },
+          nin: {
+            label: 'National Identification Number (NIN)',
+            value: false
+          },
+          drivers: {
+            label: 'Drivers License',
+            value: false
+          },
+          cac: {
+            label: 'CAC Number',
+            value: false
+          }
         },
-        dev: {
-          secretKey: '',
-          publicKey: '',
-          callbackURL: '',
-          webhookURL: ''
-        }
-      },
-      access: {
-        full: 'Allows the API Key to access GET, PATCh, PUT, DELETE and POST endpoints for all part of your account, excluding Billing and Email Address Validation.',
-        restricted: 'Customize levels of access for all parts of your account, excluding Billing and Email Address Validation. ',
-        billing: 'Allows the API to access billing endpoints for the account.'
+        key: '',
+        callbackURL: '',
+        webhookURL: ''
       }
     }
   },
@@ -209,23 +142,14 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.rd-form--section {
-  h6 {
-    font-size: 1rem;
-    font-weight: 500;
-    margin-left: 20px;
-    position: relative;
+.rd-permission {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
 
-    &::before {
-      content: "";
-      position: absolute;
-      top: 50%;
-      left: -20px;
-      transform: translateY(-50%);
-      background: var(--primary);
-      height: 10px;
-      width: 10px;
-    }
+  &:not(:last-child) {
+    margin-bottom: 20px;
   }
 }
 
