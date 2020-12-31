@@ -2,6 +2,24 @@
   <div>
     <el-row type="flex">
       <el-col :lg="20" class="mx-auto">
+        <div v-if="showApiKey" class="rd-page--section" ref="apiKey">
+          <el-alert
+            type="success"
+            class="el-alert--purple"
+            :closable="false">
+            <template slot="title">
+              <div class="el-alert--content">
+                <p>Your API Key</p>
+                <div class="rd-api--key">
+                  <h6>198278293.KALS8298U340SKjksd982</h6>
+                  <span class="copy" @click="copyKey">
+                    <i class="rd-icon--copy"></i>
+                  </span>
+                </div>
+              </div>
+            </template>
+          </el-alert>
+        </div>
         <card :header="false">
           <template slot="content">
             <el-form :model="form" label-position="top">
@@ -21,7 +39,7 @@
                   </el-form-item>
                 </el-col>
               </el-row>
-              <el-row type="flex" :gutter="80" class="flex-wrap mb-3">
+              <el-row type="flex" :gutter="80" class="flex-wrap mb-2">
                 <el-col :md="8" :lg="8">
                   <div class="rd-form--section">
                     <h6>Permissions</h6>
@@ -67,7 +85,7 @@
                     </el-col>
                   </el-row>
                   <div class="is-flex is-justify-end mt-1">
-                    <el-button type="primary">Save</el-button>
+                    <el-button type="primary" @click="save">Save</el-button>
                   </div>
                 </el-col>
               </el-row>
@@ -76,6 +94,11 @@
         </card>
       </el-col>
     </el-row>
+    <el-input
+      id="api-key"
+      class="rd-copy--input"
+      v-model="key"
+    ></el-input>
   </div>
 </template>
 
@@ -105,17 +128,28 @@ export default {
             value: false
           }
         },
-        env: '',
-        key: '',
-        callbackURL: '',
-        webhookURL: ''
-      }
+        env: ''
+      },
+      key: '198278293.KALS8298U340SKjksd982',
+      showApiKey: false
     }
   },
   computed: {},
   methods: {
-    verify () {
-      //
+    save () {
+      this.showApiKey = true
+    },
+    copyKey () {
+      const link = document.querySelector('#api-key')
+      link.select()
+      link.setSelectionRange(0, 99999)
+
+      document.execCommand('copy')
+
+      this.$message({
+        message: 'Key copied',
+        type: 'success'
+      })
     }
   }
 }
@@ -136,5 +170,40 @@ export default {
 .rd-access--explanation {
   font-size: 0.875rem;
   opacity: 0.5;
+}
+
+.el-alert--content {
+  p {
+    margin-bottom: 5px;
+  }
+  h6 {
+    margin-bottom: 0;
+  }
+}
+
+.rd-api--key {
+  display: flex;
+  align-items: center;
+
+  span {
+    margin-left: 10px;
+    padding: 10px;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #14050810;
+    border-radius: 100px;
+
+    i {
+      font-weight: 600;
+      color: #140508;
+      font-size: 1.1rem;
+    }
+  }
+}
+
+.rd-copy--input {
+  opacity: 0;
 }
 </style>
