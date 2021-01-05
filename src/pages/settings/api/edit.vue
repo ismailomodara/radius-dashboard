@@ -9,7 +9,7 @@
     <div class="rd-page--section">
       <el-row type="flex">
         <el-col :span="24">
-          <api-key-form />
+          <api-key-form action="edit" />
         </el-col>
       </el-row>
     </div>

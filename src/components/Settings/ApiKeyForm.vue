@@ -77,7 +77,7 @@
                       <el-form-item
                         label="Select key environment"
                         prop="key">
-                        <el-radio-group v-model="form.env">
+                        <el-radio-group v-model="form.env" :disabled="action === 'edit'">
                           <el-radio label="dev" border>Development</el-radio>
                           <el-radio label="prod" border>Production</el-radio>
                         </el-radio-group>
@@ -105,6 +105,12 @@
 <script>
 export default {
   name: 'ApiKeyForm',
+  props: {
+    action: {
+      type: String,
+      default: 'add'
+    }
+  },
   data () {
     return {
       loading: false,
@@ -134,7 +140,14 @@ export default {
       showApiKey: false
     }
   },
-  computed: {},
+  created () {
+    if (this.action === 'edit') {
+      this.form.name = 'ETax Production Key'
+      this.form.permissions.bvn.value = true
+      this.form.permissions.bvn.nin = true
+      this.form.env = 'prod'
+    }
+  },
   methods: {
     save () {
       this.showApiKey = true
