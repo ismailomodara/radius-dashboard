@@ -58,7 +58,7 @@
         </el-col>
       </el-row>
     </div>
-    <fund-wallet :show.sync="showFundWallet" />
+    <fund-wallet :show.sync="showFundWallet" @success="fundWallet" />
   </div>
 </template>
 
@@ -92,6 +92,9 @@ export default {
   methods: {
     verify () {
       this.$router.push({ name: 'dashboard.verify' })
+    },
+    fundWallet (amount) {
+      this.walletBalance = this.walletBalance + amount
     }
   }
 }
