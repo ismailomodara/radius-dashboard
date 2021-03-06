@@ -22,8 +22,8 @@ export default {
   },
   computed: {
     requestChart () {
-      const labels = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
-      const data = [10, 15, 12, 8, 20, 18, 12]
+      const labels = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+      const data = [2, 1.5, 1.2, 1.4, 1, 1.85, 1.6, 1.1, 0.8, 1.9, 2, 1.45]
 
       return { data, labels }
     }

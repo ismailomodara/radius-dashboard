@@ -14,48 +14,66 @@
       </el-alert>
     </div>
     <div class="rd-page--section">
-      <el-row type="flex" class="flex-wrap" :gutter="40">
+      <el-row type="flex" class="flex-wrap" :gutter="30">
         <el-col :xs="24" :sm="12" :md="12" :lg="12">
           <summary-card label="Wallet Balance" :value="formatPrice(walletBalance)">
             <el-button type="success" @click="showFundWallet = true">Fund</el-button>
           </summary-card>
         </el-col>
-        <el-col :xs="24" :sm="12" :md="12" :lg="12">
-          <summary-card label="Total Requests" :value="formatFigureToK(totalRequests)" />
+        <el-col :xs="24" :sm="6" :md="6" :lg="6">
+          <summary-card label="Users" :value="formatFigureToK(users)" />
+        </el-col>
+        <el-col :xs="24" :sm="6" :md="6" :lg="6">
+          <summary-card label="New Signups" :value="formatFigureToK(signups)" />
+        </el-col>
+      </el-row>
+    </div>
+    <div class="rd-page--section">
+      <el-row type="flex" class="flex-wrap" :gutter="30">
+        <el-col :xs="24" :sm="8" :md="8" :lg="8">
+          <summary-card label="Total Request" :value="formatFigureToK(totalRequests)" />
+        </el-col>
+        <el-col :xs="24" :sm="8" :md="8" :lg="8">
+          <summary-card label="ID Verification" :value="formatFigureToK(ids)" />
+        </el-col>
+        <el-col :xs="24" :sm="8" :md="8" :lg="8">
+          <summary-card label="Authentication" :value="formatFigureToK(auth)" />
         </el-col>
       </el-row>
     </div>
     <div class="rd-page--section">
       <el-row type="flex" class="flex-wrap" :gutter="20">
-        <el-col :lg="12">
+        <el-col :md="24" :lg="24">
           <requests-chart />
-        </el-col>
-        <el-col :lg="12">
-          <el-row type="flex" class="flex-wrap" :gutter="40">
-            <el-col v-for="(request, i) in requests" :key="i" :xs="24" :sm="12" :md="12" :lg="12">
-              <summary-card :label="request.label" :value="request.value" />
-            </el-col>
-          </el-row>
         </el-col>
       </el-row>
     </div>
     <div class="rd-page--section">
-      <recent-requests />
+      <el-row type="flex" class="flex-wrap" :gutter="30">
+        <el-col :lg="12">
+          <requests-chart-successful />
+        </el-col>
+        <el-col :lg="12">
+          <requests-chart-failed />
+        </el-col>
+      </el-row>
     </div>
     <fund-wallet :show.sync="showFundWallet" />
   </div>
 </template>
 
 <script>
-import RequestsChart from '@/components/Requests/RequestsChart'
-import RecentRequests from '@/components/Requests/RecentRequests'
 import FundWallet from '@/components/Wallet/Fund'
+import RequestsChart from '@/components/Requests/RequestsChartAll'
+import RequestsChartSuccessful from '@/components/Requests/RequestsChartSuccessful'
+import RequestsChartFailed from '@/components/Requests/RequestsChartFailed'
 
 export default {
   name: 'Dashboard',
   components: {
+    RequestsChartFailed,
+    RequestsChartSuccessful,
     FundWallet,
-    RecentRequests,
     RequestsChart
   },
   data () {
@@ -63,31 +81,14 @@ export default {
       loading: false,
       walletBalance: 150500,
       totalRequests: 1850,
+      users: 1850,
+      signups: 1850,
+      ids: 1850,
+      auth: 1850,
       showFundWallet: false
     }
   },
-  computed: {
-    requests () {
-      return [
-        {
-          label: 'Users',
-          value: this.formatFigureToK(1850)
-        },
-        {
-          label: 'New SignUps',
-          value: this.formatFigureToK(1850)
-        },
-        {
-          label: 'ID Verifications',
-          value: this.formatFigureToK(1850)
-        },
-        {
-          label: 'Authentications',
-          value: this.formatFigureToK(1850)
-        }
-      ]
-    }
-  },
+  computed: {},
   methods: {
     verify () {
       this.$router.push({ name: 'dashboard.verify' })

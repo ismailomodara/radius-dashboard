@@ -2,7 +2,7 @@
   <bar-chart-instance
     :chart-data.sync="chartData"
     :options.sync="chartOptions"
-    :height="400"
+    :height="height"
   />
 </template>
 
@@ -11,6 +11,20 @@ import BarChartInstance from './bar-chart'
 
 export default {
   name: 'BarChart',
+  props: {
+    height: {
+      type: Number,
+      default: 300
+    },
+    data: {
+      type: Array,
+      required: true
+    },
+    labels: {
+      type: Array,
+      required: true
+    }
+  },
   components: {
     BarChartInstance
   },
@@ -19,19 +33,16 @@ export default {
   },
   computed: {
     chartData () {
-      const labels = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
-      const reports = [10, 15, 12, 8, 20, 18, 12, 7, 19, 11, 6, 2]
-
       return {
-        labels: labels,
+        labels: this.labels,
         datasets: [
           {
-            label: 'Number of Reports',
+            label: '',
             backgroundColor: 'rgb(0, 0, 0)',
             barThickness: 6,
             maxBarThickness: 8,
             minBarLength: 2,
-            data: reports
+            data: this.data
           }
         ]
       }
@@ -39,6 +50,7 @@ export default {
     chartOptions () {
       return {
         responsive: true,
+        legend: false,
         maintainAspectRatio: false,
         scales: {
           xAxes: [
@@ -59,7 +71,7 @@ export default {
               stacked: true,
               ticks: {
                 beginAtZero: true,
-                stepSize: 2
+                stepSize: Math.min(...this.data)
               }
             }
           ]

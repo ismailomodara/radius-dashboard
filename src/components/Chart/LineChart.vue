@@ -2,7 +2,7 @@
   <line-chart-instance
     :chart-data.sync="chartData"
     :options.sync="chartOptions"
-    :height="205"
+    :height="height"
   />
 </template>
 
@@ -23,6 +23,10 @@ export default {
     color: {
       type: String,
       default: '#D05169'
+    },
+    height: {
+      type: Number,
+      default: 300
     }
   },
   components: {
@@ -44,12 +48,12 @@ export default {
     },
     setStep () {
       return (
-        Math.round(Math.max(...this.chartData.datasets[0].data) / 4 / 10) * 10
+        Math.round(Math.min(...this.chartData.datasets[0].data))
       )
     },
     setMax () {
       return (
-        Math.round(Math.max(...this.chartData.datasets[0].data) / 10) * 10 +
+        Math.round(Math.max(...this.chartData.datasets[0].data)) +
         this.setStep
       )
     },
@@ -107,7 +111,7 @@ export default {
                 label += ': '
               }
               label += value
-              return label
+              return `${label}k`
             }
           }
         },
