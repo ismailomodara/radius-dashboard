@@ -28,17 +28,17 @@ export default {
   },
   computed: {
     setValue: {
-      get() {
-        return this.value;
+      get () {
+        return this.value
       },
-      set(value) {
-        this.$emit("update:value", value);
+      set (value) {
+        this.$emit('update:value', value)
       }
     }
   },
   watch: {
-    input() {
-      this.setValue = this.input;
+    input () {
+      this.setValue = this.input
     }
   }
 }
