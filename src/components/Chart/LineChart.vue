@@ -72,26 +72,26 @@ export default {
               size: this.fontSize
             },
             formatter: (value) => {
-              return value >= 1000 ? `${Math.round(value/1000)}k` : value;
+              return value >= 1000 ? `${Math.round(value / 1000)}k` : value
             }
           }
         },
         tooltips: {
           callbacks: {
             label (tooltipItem, data) {
-              let label = data.datasets[tooltipItem.datasetIndex].label || '';
-              let value;
+              let label = data.datasets[tooltipItem.datasetIndex].label || ''
+              let value
               if (tooltipItem.datasetIndex === 1) {
-                value = tooltipItem.yLabel + data.datasets[0].data[tooltipItem.index];
+                value = tooltipItem.yLabel + data.datasets[0].data[tooltipItem.index]
               } else {
-                value = tooltipItem.value;
+                value = tooltipItem.value
               }
               if (label) {
-                label += ': ';
+                label += ': '
               }
-              value = value >= 1000 ? `${Math.round(value/1000)}k` : value;
-              label += value;
-              return label;
+              value = value >= 1000 ? `${Math.round(value / 1000)}k` : value
+              label += value
+              return label
             }
           }
         }

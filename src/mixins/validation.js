@@ -1,13 +1,13 @@
 const validateUrl = (rule, value, callback) => {
-  const regex = /(ftp|http|https):\/\/(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-/]))?/;
+  const regex = /(ftp|http|https):\/\/(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-/]))?/
   if (!value) {
-    callback(new Error("This field is required"));
+    callback(new Error('This field is required'))
   } else if (regex.test(value) === false) {
-    callback(new Error("Url is invalid"));
-  }else {
-    callback();
+    callback(new Error('Url is invalid'))
+  } else {
+    callback()
   }
-};
+}
 
 export default {
   methods: {
@@ -50,8 +50,8 @@ export default {
       ]
     },
 
-    urlField() {
-      return [{ required: true, validator: validateUrl, trigger: "blur" }];
+    urlField () {
+      return [{ required: true, validator: validateUrl, trigger: 'blur' }]
     },
 
     bvnField () {
@@ -67,6 +67,6 @@ export default {
           trigger: 'change'
         }
       ]
-    },
+    }
   }
 }

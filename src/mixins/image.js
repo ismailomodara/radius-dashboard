@@ -9,8 +9,8 @@ export default {
     },
 
     getBase64Image (image) {
-      const base64Prefix = 'data:image/png;base64, ';
-      return `${base64Prefix} ${image}`;
+      const base64Prefix = 'data:image/png;base64, '
+      return `${base64Prefix} ${image}`
     }
   }
 }
