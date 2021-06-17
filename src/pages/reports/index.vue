@@ -5,7 +5,7 @@
 </template>
 
 <script>
-import Requests from '@/components/Requests/Requests'
+import Requests from '@/components/Reports/Reports'
 export default {
   name: 'Reports',
   components: { Requests },
