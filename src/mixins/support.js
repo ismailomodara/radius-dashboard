@@ -1,4 +1,4 @@
-export default {
+const support = {
   methods: {
     formatPrice (value) {
       return value ? `₦${Number(value).toLocaleString()}.00` : '₦0'
@@ -25,6 +25,11 @@ export default {
           '+$1 $2 $3 $4'
         )
         : '-'
+    },
+    sumOfElements (arr) {
+      return arr.reduce((accumulator, element) => accumulator + element, 0)
     }
   }
 }
+
+export default support

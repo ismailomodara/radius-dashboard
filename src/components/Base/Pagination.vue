@@ -1,6 +1,6 @@
 <template>
   <div class="eden-pagination">
-    <p>{{ from }} - {{ to }} of {{ total }}</p>
+    <p>Showing {{ from + 1 }} - {{ to }} of {{ total }}</p>
     <el-pagination
         :page-size="pageSize"
         background
@@ -24,7 +24,7 @@ export default {
     pages: Number,
     pageSize: {
       type: Number,
-      default: 50
+      default: 20
     }
   },
   data () {

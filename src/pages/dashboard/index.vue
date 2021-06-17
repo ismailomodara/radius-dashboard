@@ -1,80 +1,54 @@
 <template>
   <div>
     <div class="rd-page--section">
-      <el-alert
-        type="success"
-        class="el-alert--purple"
-        :closable="false">
-        <template slot="title">
-          <div class="el-alert--content">
-            <h6>Verify Account!</h6>
-            <p>To keep us all safe, wee need to verify your company details. <span @click="verify">Verify now.</span></p>
-          </div>
-        </template>
-      </el-alert>
-    </div>
-    <div class="rd-page--section">
-      <el-row type="flex" class="flex-wrap" :gutter="30">
+      <el-row type="flex" class="flex-wrap" :gutter="40">
         <el-col :xs="24" :sm="12" :md="12" :lg="12">
           <summary-card label="Wallet Balance" :value="formatPrice(walletBalance)">
             <el-button type="success" @click="showFundWallet = true">Fund</el-button>
           </summary-card>
         </el-col>
-        <el-col :xs="24" :sm="6" :md="6" :lg="6">
-          <summary-card label="Users" :value="formatFigureToK(users)" />
-        </el-col>
-        <el-col :xs="24" :sm="6" :md="6" :lg="6">
-          <summary-card label="New Signups" :value="formatFigureToK(signups)" />
+        <el-col :xs="24" :sm="12" :md="12" :lg="12">
+          <summary-card label="Total Requests" :value="totalRequests" />
         </el-col>
       </el-row>
     </div>
+
     <div class="rd-page--section">
-      <el-row type="flex" class="flex-wrap" :gutter="30">
-        <el-col :xs="24" :sm="8" :md="8" :lg="8">
-          <summary-card label="Total Request" :value="formatFigureToK(totalRequests)" />
-        </el-col>
-        <el-col :xs="24" :sm="8" :md="8" :lg="8">
-          <summary-card label="ID Verification" :value="formatFigureToK(ids)" />
-        </el-col>
-        <el-col :xs="24" :sm="8" :md="8" :lg="8">
-          <summary-card label="Authentication" :value="formatFigureToK(auth)" />
+      <el-row type="flex" class="flex-wrap" :gutter="20">
+        <el-col :md="12" :lg="12">
+          <reports-by-type />
         </el-col>
       </el-row>
     </div>
+
     <div class="rd-page--section">
       <el-row type="flex" class="flex-wrap" :gutter="20">
         <el-col :md="24" :lg="24">
-          <requests-chart />
+          <reports-chart-all />
         </el-col>
       </el-row>
     </div>
+
     <div class="rd-page--section">
-      <el-row type="flex" class="flex-wrap" :gutter="30">
-        <el-col :lg="12">
-          <requests-chart-successful />
-        </el-col>
-        <el-col :lg="12">
-          <requests-chart-failed />
-        </el-col>
-      </el-row>
+      <reports-recent />
     </div>
-    <fund-wallet :show.sync="showFundWallet" @success="fundWallet" />
+    <fund-wallet :show.sync="showFundWallet" />
   </div>
 </template>
 
 <script>
+import ReportsByType from '@/components/Reports/ReportsByType'
+import ReportsChartAll from '@/components/Reports/ReportsChartAll'
+import ReportsRecent from '@/components/Reports/ReportsRecent'
 import FundWallet from '@/components/Wallet/Fund'
-import RequestsChart from '@/components/Requests/RequestsChartAll'
-import RequestsChartSuccessful from '@/components/Requests/RequestsChartSuccessful'
-import RequestsChartFailed from '@/components/Requests/RequestsChartFailed'
 
 export default {
   name: 'Dashboard',
   components: {
-    RequestsChartFailed,
-    RequestsChartSuccessful,
-    FundWallet,
-    RequestsChart
+    ReportsByType,
+    ReportsChartAll,
+    ReportsRecent,
+    FundWallet
   },
   data () {
     return {

@@ -11,6 +11,7 @@ import LineChartInstance from './line-chart'
 
 export default {
   name: 'LineChart',
+
   props: {
     data: {
       type: Array,
@@ -24,100 +25,74 @@ export default {
       type: String,
       default: '#D05169'
     },
+    fontSize: {
+      type: Number,
+      default: 16
+    },
     height: {
       type: Number,
       default: 300
     }
   },
+
   components: {
     LineChartInstance
   },
+
   computed: {
     chartData () {
       return {
         labels: this.labels,
         datasets: [
           {
-            backgroundColor: `${this.color}15`,
             borderColor: this.color,
             borderWidth: 2,
-            data: this.data
+            data: this.data,
+            tension: 0.1
           }
         ]
       }
     },
-    setStep () {
-      return (
-        Math.round(Math.min(...this.chartData.datasets[0].data))
-      )
-    },
-    setMax () {
-      return (
-        Math.round(Math.max(...this.chartData.datasets[0].data)) +
-        this.setStep
-      )
-    },
+
     chartOptions () {
       return {
         responsive: true,
         legend: false,
         maintainAspectRatio: false,
-        elements: {
-          line: {
-            tension: 0
-          },
-          point: {
-            radius: 0
-          }
-        },
-        scales: {
-          xAxes: [
-            {
-              display: true,
-              gridLines: {
-                color: '#57645E10'
-              },
-              stacked: true
-            }
-          ],
-          yAxes: [
-            {
-              display: true,
-              gridLines: {
-                display: false,
-                drawBorder: false
-              },
-              stacked: true,
-              ticks: {
-                beginAtZero: true,
-                stepSize: this.setStep,
-                max: this.setMax
+        plugins: {
+          datalabels: {
+            labels: {
+              title: {
+                color: '#36AFA4',
+                display: 'auto',
+                align: 'top'
               }
+            },
+            font: {
+              size: this.fontSize
+            },
+            formatter: (value) => {
+              return value >= 1000 ? `${Math.round(value/1000)}k` : value;
             }
-          ]
+          }
         },
         tooltips: {
           callbacks: {
             label (tooltipItem, data) {
-              let label = data.datasets[tooltipItem.datasetIndex].label || ''
-              let value
+              let label = data.datasets[tooltipItem.datasetIndex].label || '';
+              let value;
               if (tooltipItem.datasetIndex === 1) {
-                value =
-                  tooltipItem.yLabel + data.datasets[0].data[tooltipItem.index]
+                value = tooltipItem.yLabel + data.datasets[0].data[tooltipItem.index];
               } else {
-                value = tooltipItem.value
+                value = tooltipItem.value;
               }
               if (label) {
-                label += ': '
+                label += ': ';
               }
-              label += value
-              return `${label}k`
+              value = value >= 1000 ? `${Math.round(value/1000)}k` : value;
+              label += value;
+              return label;
             }
-          }
-        },
-        layout: {
-          padding: {
-            top: 20
           }
         }
       }

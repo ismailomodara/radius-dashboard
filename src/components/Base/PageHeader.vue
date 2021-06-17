@@ -23,11 +23,23 @@ export default {
     subheading: {
       type: String,
       required: true
+    },
+    redirectUrl: {
+      type: String,
+      required: false
+    },
+    hashName: {
+      type: String,
+      required: false
     }
   },
   methods: {
     back () {
-      this.$router.go(-1)
+      if (this.redirectUrl) {
+        this.$router.push({ name: this.redirectUrl, hash: `#${this.hashName}` })
+      } else {
+        this.$router.go(-1)
+      }
     }
   }
 }

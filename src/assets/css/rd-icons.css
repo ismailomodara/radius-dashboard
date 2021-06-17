@@ -2,9 +2,9 @@
   font-family: 'rd-icons';
   src:  url('../fonts/rd-icons.eot?by2y3y');
   src:  url('../fonts/rd-icons.eot?by2y3y#iefix') format('embedded-opentype'),
-    url('../fonts/rd-icons.ttf?by2y3y') format('truetype'),
-    url('../fonts/rd-icons.woff?by2y3y') format('woff'),
-    url('../fonts/rd-icons.svg?by2y3y#rd-icons') format('svg');
+  url('../fonts/rd-icons.ttf?by2y3y') format('truetype'),
+  url('../fonts/rd-icons.woff?by2y3y') format('woff'),
+  url('../fonts/rd-icons.svg?by2y3y#rd-icons') format('svg');
   font-weight: normal;
   font-style: normal;
 }

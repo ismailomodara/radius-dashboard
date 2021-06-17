@@ -10,12 +10,12 @@
     </div>
     <div class="rd-page--section">
       <el-row type="flex" class="flex-wrap" :gutter="40">
-        <el-col v-for="(auth, index) in authx" :key="index" :md="6" :lg="6">
-          <div class="rd-authx" @click="editAuthX(auth.id)">
-            <img :src="getImage(auth.image)" alt="User" />
-            <span>{{ auth.name }}</span>
-          </div>
-        </el-col>
+<!--        <el-col v-for="(auth, index) in authx" :key="index" :md="6" :lg="6">-->
+<!--          <div class="rd-authx" @click="editAuthX(auth.id)">-->
+<!--            <img :src="getImage(auth.image)" alt="User" />-->
+<!--            <span>{{ auth.name }}</span>-->
+<!--          </div>-->
+<!--        </el-col>-->
         <el-col :md="6" :lg="6">
           <div class="rd-authx add" @click="createAuthX">
             <i class="rd-icon--plus-circle"></i>

@@ -23,15 +23,28 @@
             </div>
           </template>
           <template slot="content">
-            <el-table :data="pageData.data" empty-text="No Requests(s)">
-              <el-table-column prop="index" width="100">
+            <el-table :data="pageData.data" empty-text="No Report">
+              <el-table-column prop="type" width="160">
                 <template slot="header">
                 <span class="rd-table--header">
-                  ID
+                  Report Type
                 </span>
                 </template>
                 <template slot-scope="scope">
-                  <p>{{ scope.row.id }}</p>
+                  <div class="rd-stack">
+                    <p>{{ scope.row.type.toUpperCase() }}</p>
+                    <span v-if="scope.row.service">{{ scope.row.service }}</span>
+                  </div>
+                </template>
+              </el-table-column>
+              <el-table-column prop="status" width="200">
+                <template slot="header">
+                <span class="rd-table--header">
+                  Status
+                </span>
+                </template>
+                <template slot-scope="scope">
+                  <el-tag :type="setType(scope.row.status)">{{ formatText(scope.row.status) }}</el-tag>
                 </template>
               </el-table-column>
               <el-table-column prop="date" width="200">
@@ -44,24 +57,14 @@
                   <p>{{ scope.row.date }}</p>
                 </template>
               </el-table-column>
-              <el-table-column prop="service">
+              <el-table-column prop="time">
                 <template slot="header">
-                <span class="rd-table--header">
-                  Service
-                </span>
+                  <span class="rd-table--header">
+                    Time
+                  </span>
                 </template>
                 <template slot-scope="scope">
-                  <p>{{ scope.row.service }}</p>
-                </template>
-              </el-table-column>
-              <el-table-column prop="status">
-                <template slot="header">
-                <span class="rd-table--header">
-                  Status
-                </span>
-                </template>
-                <template slot-scope="scope">
-                  <el-tag :type="setType(scope.row.status)">{{ formatText(scope.row.status) }}</el-tag>
+                  <p>{{ scope.row.time }}</p>
                 </template>
               </el-table-column>
               <el-table-column prop="detail">
@@ -104,78 +107,98 @@ export default {
         data: [
           {
             id: '001',
-            date: '24 Dec 2020',
-            service: 'BVN',
+            date: '24th Dec, 2020',
+            time: '03:42 PM',
+            type: 'login',
+            service: null,
             status: 'successful',
             detail: 'Detail'
           },
           {
             id: '002',
-            date: '24 Dec 2020',
+            date: '24th Dec, 2020',
+            time: '03:42 PM',
+            type: 'signup',
             service: 'CAC',
             status: 'successful',
             detail: 'Detail'
           },
           {
             id: '003',
-            date: '24 Dec 2020',
+            date: '24th Dec, 2020',
+            time: '03:42 PM',
+            type: 'signup',
             service: 'AUTH',
             status: 'pending',
             detail: 'Detail'
           },
           {
             id: '004',
-            date: '24 Dec 2020',
+            date: '24th Dec, 2020',
+            time: '03:42 PM',
+            type: 'signup',
             service: 'AUTH',
             status: 'successful',
             detail: 'Detail'
           },
           {
             id: '005',
-            date: '24 Dec 2020',
+            date: '24th Dec, 2020',
+            time: '03:42 PM',
+            type: 'signup',
             service: 'NIN',
             status: 'failed',
             detail: 'Detail'
           },
           {
             id: '006',
-            date: '24 Dec 2020',
-            service: 'BVN',
+            date: '24th Dec, 2020',
+            time: '03:42 PM',
+            type: 'login',
+            service: null,
             status: 'successful',
             detail: 'Detail'
           },
           {
             id: '007',
-            date: '24 Dec 2020',
-            service: 'CAC',
+            date: '24th Dec, 2020',
+            time: '03:42 PM',
+            type: 'login',
+            service: null,
             status: 'successful',
             detail: 'Detail'
           },
           {
             id: '008',
-            date: '24 Dec 2020',
+            date: '24th Dec, 2020',
+            time: '03:42 PM',
+            type: 'signup',
             service: 'AUTH',
             status: 'pending',
             detail: 'Detail'
           },
           {
             id: '009',
-            date: '24 Dec 2020',
+            date: '24th Dec, 2020',
+            time: '03:42 PM',
+            type: 'signup',
             service: 'AUTH',
             status: 'successful',
             detail: 'Detail'
           },
           {
             id: '010',
-            date: '24 Dec 2020',
-            service: 'NIN',
+            date: '24th Dec, 2020',
+            time: '03:42 PM',
+            type: 'login',
+            service: null,
             status: 'failed',
             detail: 'Detail'
           }
         ]
       },
       showRequest: false,
-      request: {}
+      report: {}
     }
   },
   methods: {

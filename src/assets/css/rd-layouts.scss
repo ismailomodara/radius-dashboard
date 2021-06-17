@@ -43,6 +43,13 @@ a, a:hover {
   font-weight: 600;
 }
 
+.el-pagination.is-background .el-pager li:not(.disabled):hover {
+  color: #D05169 !important;
+}
+
+.el-pagination.is-background .el-pager li.active:hover {
+  color: #FFFFFF !important;
+}
 
 /*
  ** Layouts
@@ -234,6 +241,14 @@ a, a:hover {
   text-align: center;
 }
 
+.text-left {
+  text-align: left;
+}
+
+.text-right {
+  text-align: right;
+}
+
 .text-muted {
   color: #14050890;
 }
@@ -248,6 +263,10 @@ a, a:hover {
 
 .text-cursor {
   cursor: pointer !important;
+}
+
+.text-opacity {
+  opacity: 0.7;
 }
 
 .rd-page--section:not(:last-child) {
@@ -271,5 +290,61 @@ a, a:hover {
       height: 10px;
       width: 10px;
     }
+  }
+}
+
+.fadeIn {
+  opacity: 0;
+  -webkit-animation: fadeIn 0.5s ease-out forwards;
+  animation: fadeIn 0.5s ease-out forwards;
+  -webkit-animation-delay: 0.1s;
+  animation-delay: 0.1s;
+}
+
+@-webkit-keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+.fadeInUp {
+  opacity: 0;
+  -webkit-animation: fadeInUp 0.7s ease-out forwards;
+  animation: fadeInUp 0.7s ease-out forwards;
+  -webkit-animation-delay: 0.1s;
+  animation-delay: 0.1s;
+}
+
+@-webkit-keyframes fadeIn {
+  0% {
+    opacity: 0;
+    transform: translate3d(0, 50px, 0);
+  }
+  100% {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+@keyframes fadeInUp {
+  0% {
+    opacity: 0;
+    transform: translate3d(0, 50px, 0);
+  }
+  100% {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
   }
 }
