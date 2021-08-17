@@ -40,6 +40,7 @@ export default {
     padding: 40px 30px;
     position: relative;
     display: flex;
+    flex-wrap: wrap;
     justify-content: space-between;
     align-items: center;
     margin-bottom: 20px;

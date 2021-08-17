@@ -1,6 +1,14 @@
 <template>
   <div>
     <div class="rd-page--section">
+      <el-row type="flex">
+        <el-col :span="24">
+          <h6>Dashboard</h6>
+          <p>Here is a summary of activities in your account.</p>
+        </el-col>
+      </el-row>
+    </div>
+    <div class="rd-page--section">
       <el-row type="flex" class="flex-wrap" :gutter="40">
         <el-col :xs="24" :sm="12" :md="12" :lg="12">
           <summary-card label="Wallet Balance" :value="formatPrice(walletBalance)">

@@ -1,47 +1,54 @@
 <template>
   <div class="rd">
-    <div class="rd-header">
-      <div class="rd-page--header">
-        <el-container>
-          <div class="rd-logo">
-            <img :src="getImage('logo.png')" alt="Radius" />
-          </div>
-          <div>
-            <div class="rd-user">
-              <el-badge :value="3" class="mr-1" type="primary">
-                <i class="rd-icon--bell"></i>
-              </el-badge>
-              <p>{{ userName }}</p>
-              <el-dropdown trigger="click" @command="command">
-                <div class="rd-user--action">
-                  <avatar :size="36" :name="userName" />
-                  <i class="rd-icon--chevron-down"></i>
-                </div>
-                <el-dropdown-menu slot="dropdown">
-                  <el-dropdown-item icon="rd-icon--user" command="settings"
-                  >Profile</el-dropdown-item
-                  >
-                  <el-dropdown-item icon="el-icon-switch-button" command="logout"
-                  >Logout</el-dropdown-item
-                  >
-                </el-dropdown-menu>
-              </el-dropdown>
+    <div class="rd-sidebar">
+      <div class="rd-sidebar__header">
+        <div @click="toggle">
+          <avatar :size="36" :name="userName" />
+        </div>
+        <div class="rd-user">
+          <p>{{ userName }}</p>
+          <el-dropdown trigger="click" @command="command">
+            <div class="rd-user--action">
+              <i class="rd-icon--chevron-down"></i>
             </div>
-          </div>
-        </el-container>
+            <el-dropdown-menu slot="dropdown">
+              <el-dropdown-item icon="rd-icon--user" command="settings"
+              >Profile</el-dropdown-item
+              >
+              <el-dropdown-item icon="el-icon-switch-button" command="logout"
+              >Logout</el-dropdown-item
+              >
+            </el-dropdown-menu>
+          </el-dropdown>
+        </div>
       </div>
-      <div class="rd-header--nav">
-        <el-container>
-          <el-menu
-            :default-active="activeMenu"
-            :router="true"
-            class="el-menu-demo"
-            mode="horizontal"
-            background-color="#000000"
-            text-color="#fff"
-            active-text-color="#fff">
+      <div class="rd-sidebar__menu">
+        <el-menu
+          :default-active="activeMenu"
+          :router="true">
+          <el-menu-item class="notification">
+            <i :class="'rd-icon--bell'"></i>
+            <span>Notification</span>
+            <span class="badge">9</span>
+          </el-menu-item>
+          <template v-for="(route, index) in routes">
+            <el-submenu v-if="route.type === 'group'" :index="route.name" :key="index">
+              <template slot="title">
+                <i :class="`rd-icon--${route.icon}`"></i>
+                <span>{{ route.label }}</span>
+              </template>
+              <el-menu-item
+                v-for="(child, i) in route.children"
+                :key="i"
+                :index="child.name"
+                :route="{ name: `${child.name}.index` }"
+              >
+                <i :class="`rd-icon--${child.icon}`"></i>
+                <span>{{ child.label }}</span>
+              </el-menu-item>
+            </el-submenu>
             <el-menu-item
-              v-for="(route, index) in routes"
+              v-if="route.type === 'regular'"
               :key="index"
               :index="route.name"
               :route="{ name: `${route.name}.index` }"
@@ -49,10 +56,11 @@
               <i :class="`rd-icon--${route.icon}`"></i>
               <span>{{ route.label }}</span>
             </el-menu-item>
-          </el-menu>
-        </el-container>
+          </template>
+        </el-menu>
       </div>
     </div>
+    <div class="rd-overlay" @click="closeNav"></div>
     <div class="rd-dashboard--body">
       <el-container>
         <transition name="fade" mode="out-in">
@@ -86,32 +94,50 @@ export default {
         {
           icon: 'grid',
           label: 'Dashboard',
-          name: 'dashboard'
+          name: 'dashboard',
+          type: 'regular'
         },
         {
           icon: 'check-circle',
           label: 'Verify',
-          name: 'verifications'
+          name: 'verifications',
+          type: 'regular'
         },
         {
-          icon: 'lock',
-          label: 'AuthX',
-          name: 'authx'
+          icon: 'gift',
+          label: 'Products',
+          name: 'products',
+          type: 'group',
+          children: [
+            {
+              icon: 'user',
+              label: 'Identity',
+              name: 'identity'
+            },
+            {
+              icon: 'lock',
+              label: 'AuthX',
+              name: 'authx'
+            }
+          ]
         },
         {
           icon: 'clipboard',
           label: 'Reports',
-          name: 'reports'
+          name: 'reports',
+          type: 'regular'
         },
         {
           icon: 'credit-card',
           label: 'Billings',
-          name: 'billings'
+          name: 'billings',
+          type: 'regular'
         },
         {
           icon: 'settings',
           label: 'Settings',
-          name: 'settings'
+          name: 'settings',
+          type: 'regular'
         }
       ],
       showFundWallet: false
@@ -119,7 +145,7 @@ export default {
   },
   computed: {
     userName () {
-      return 'Snubby Pay'
+      return 'NQLB'
     },
     showFundWalletCTA () {
       return !this.$route.path.includes('dashboard')
@@ -144,100 +170,209 @@ export default {
       } else {
         this.$router.push({ name: 'report' })
       }
+    },
+    toggle () {
+      document.querySelector('.rd-sidebar').classList.toggle('open')
+    },
+    closeNav () {
+      document.querySelector('.rd-sidebar').classList.remove('open')
     }
   }
 }
 </script>
 
-<style scoped lang="scss">
+<style lang="scss">
+$--sidenav: 300px;
+
 .rd {
-  height: 100%;
+  height: 100vh;
   width: 100%;
   position: relative;
-  overflow-y: scroll;
+  display: flex;
+  align-items: center;
 
-  .rd-header {
-    position: fixed;
-    height: calc(15vh + 80px);
-    width: 100%;
-    z-index: 999;
+  .rd-sidebar {
+    width: $--sidenav;
+    height: 100%;
+    background: #140508;
+    padding: 20px;
+    overflow-y: scroll;
+    z-index: 4;
 
-    .rd-page--header {
-      height: 15vh;
-      background: #fff;
-      position: relative;
+    &__header {
+      background: #3d101980;
+      border-radius: 8px;
+      padding: 10px;
+      margin-bottom: 40px;
       display: flex;
       align-items: center;
-      justify-content: flex-start;
-
-      .el-container {
-        flex-direction: row;
-        justify-content: space-between;
-        align-items: center;
-      }
-
-      .rd-logo img {
-        height: 50px;
-        width: auto;
-      }
 
       .rd-user {
+        margin-left: 5px;
         display: flex;
         align-items: center;
+        justify-content: space-between;
+        width: 100%;
 
         p {
           margin: 0 10px;
           font-weight: 500;
-        }
-
-        .rd-user--action {
-          display: flex;
-          align-items: center;
-          i {
-            margin-left: 7px;
-          }
+          color: #fff;
         }
       }
-    }
-    .rd-header--nav {
-      background: #000000;
+
+      .rd-user--action {
+        i {
+          color: #FFFFFF;
+        }
+      }
+  }
+
+    &__menu {
+      background: transparent;
       width: 100%;
 
       .el-menu {
-        height: 70px;
-        display: flex;
-        justify-content: center;
         border: none;
+        background: none;
+        margin-top: 16px;
+        position: relative;
+        overflow-y: auto;
+        overflow-x: hidden;
 
         .el-menu-item {
-          height: 100%;
+          background: transparent;
+          color: #FFFFFF;
           display: flex;
-          justify-content: center;
           align-items: center;
-          border-bottom: 4px solid transparent;
-          opacity: 0.7;
-          padding: 0 30px;
-          font-weight: 500;
+          font-size: 14px;
+          font-weight: 400;
+          opacity: 0.5;
+          border-top-right-radius: 10px;
+          border-bottom-right-radius: 10px;
+          border-left: 5px solid transparent;
+          padding: 14px 20px;
+          transition: all 0.3s ease-in-out;
+
+          span {
+            margin-left: 14px;
+            transition: opacity 0.3s ease-in-out;
+          }
 
           i {
-            color: #fff;
-          }
-          i + span {
-            margin-left: 7px;
+            color: #FFFFFF;
           }
 
           &.is-active {
             opacity: 1;
-            border-bottom: 4px solid var(--primary) !important
+            background: #fdf6f720;
+            border-color: var(--primary);
+            color: #ffffff;
+
+            i {
+              color: #ffffff !important;
+            }
+          }
+
+          &:hover:not(.is-active) {
+            background: #fdf6f730;
+          }
+
+          &.notification {
+            padding-top: 26px !important;
+            padding-bottom: 26px !important;
+            margin: 16px 0 30px;
+            border-bottom-left-radius: 0;
+            border-bottom-right-radius: 0;
+            border-bottom: 1px solid #ffffff40;
+            position: relative;
+            opacity: 1;
+
+            i, span {
+              opacity: 0.5;
+            }
+
+            .badge {
+              opacity: 1;
+              height: 20px;
+              width: 20px;
+              border-radius: 50%;
+              background: #e1404d;
+              color: #ffffff;
+              font-size: 12px;
+              display: flex;
+              justify-content: center;
+              align-items: center;
+              position: absolute;
+              top: 50%;
+              transform: translateY(-50%);
+              right: 10px;
+            }
+          }
+        }
+
+        .el-submenu {
+          padding: 14px 20px;
+          border-left: 5px solid transparent;
+          border-top-right-radius: 10px;
+          border-bottom-right-radius: 10px;
+          opacity: 0.5;
+          transition: all 0.3s ease-in-out;
+
+          &:hover {
+            background: #fdf6f730;
+          }
+
+          &.is-opened {
+            background: transparent !important;
+          }
+
+          .el-submenu__title {
+            height: 28px;
+            line-height: 28px;
+            padding: 0 !important;
+
+            &:hover {
+              background: transparent;
+            }
+
+            span {
+              margin-left: 14px;
+              color: #FFFFFF;
+              transition: opacity 0.3s ease-in-out;
+            }
+
+            i {
+              color: #FFFFFF;
+            }
+          }
+
+          .el-menu-item {
+            padding-left: 20px;
           }
         }
       }
     }
   }
 
+  .rd-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: -1;
+    opacity: 0;
+    transition: opacity 0.3s ease-in;
+  }
+
   .rd-dashboard--body {
-    margin-top: calc(15vh + 80px);
-    padding: 60px 0;
+    height: 100vh;
+    width: calc(100% - #{$--sidenav});
+    background: #EEF0F5;
+    padding: 30px;
+    overflow-y: scroll;
     position: relative;
 
     .rd-fund--wallet {
@@ -288,9 +423,125 @@ export default {
   opacity: 0;
 }
 
+@media (max-width: 1024px) {
+  .rd {
+    .rd-sidebar {
+      position: absolute;
+      left: 0;
+      width: 80px;
+      padding: 20px 5px;
+      transition: width 0.3s ease-in;
+      z-index: 4;
+
+      &__header {
+        display: flex;
+        justify-content: center;
+
+        .rd-user {
+          display: none;
+        }
+      }
+
+      &__menu {
+        .el-menu-item span {
+          display: none;
+        }
+
+        .el-submenu {
+          &__title span {
+            display: none;
+          }
+
+          .el-submenu__icon-arrow {
+            display: none;
+          }
+          .el-menu-item {
+            padding-left: 0 !important;
+          }
+        }
+      }
+
+      &.open {
+        width: 300px !important;
+        padding: 20px;
+        transition: width 0.3s ease-out;
+
+        .rd-sidebar__header {
+          display: flex !important;
+          justify-content: space-between !important;
+
+          .rd-user {
+            display: flex !important;
+          }
+        }
+
+        .rd-sidebar__menu {
+          .el-menu-item span {
+            display: flex !important;
+          }
+
+          .el-submenu {
+            &__title {
+              display: flex !important;
+              align-items: center;
+
+              span {
+                display: flex;
+                padding-left: 10px !important;
+              }
+            }
+
+            .el-submenu__icon-arrow {
+              display: flex;
+            }
+            .el-menu-item {
+              padding-left: 10px !important;
+            }
+          }
+        }
+
+        + .rd-overlay {
+          opacity: 1;
+          z-index: 3;
+          transition: opacity 0.3s ease-out;
+        }
+      }
+    }
+
+    .rd-dashboard--body {
+      width: 100% !important;
+      padding-left: 100px !important;
+    }
+  }
+}
+
 @media (max-width: 600px) {
-  .el-menu-item span {
-    display: none;
+  .rd {
+    .rd-sidebar {
+      &.open {
+        width: 80% !important;
+
+        .rd-sidebar__header {
+          display: flex !important;
+          justify-content: space-between !important;
+
+          .rd-user {
+            display: flex !important;
+          }
+        }
+
+        .rd-sidebar__menu {
+          .el-menu-item span {
+            display: flex !important;
+          }
+        }
+      }
+    }
+
+    .rd-dashboard--body {
+      padding-left: 80px !important;
+      padding-right: 10px !important;
+    }
   }
 }
 </style>
