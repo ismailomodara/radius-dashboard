@@ -3,7 +3,7 @@
     <div class="rd-sidebar">
       <div class="rd-sidebar__header">
         <div @click="toggle">
-          <avatar :size="36" :name="userName" />
+          <avatar :size="36" :name="userName" :background="'#140508'" />
         </div>
         <div class="rd-user">
           <p>{{ userName }}</p>
@@ -186,9 +186,10 @@ $--sidenav: 300px;
     padding: 20px;
     overflow-y: scroll;
     z-index: 4;
+    opacity: 0.8;
 
     &__header {
-      background: #3d101980;
+      background: #d0516990;
       border-radius: 8px;
       padding: 10px;
       margin-bottom: 40px;
@@ -235,7 +236,7 @@ $--sidenav: 300px;
           align-items: center;
           font-size: 14px;
           font-weight: 400;
-          opacity: 0.5;
+          opacity: 0.7;
           border-top-right-radius: 10px;
           border-bottom-right-radius: 10px;
           border-left: 5px solid transparent;
