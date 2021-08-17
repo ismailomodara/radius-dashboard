@@ -1,6 +1,9 @@
 <template>
   <div class="rd">
     <div class="rd-sidebar">
+      <div class="rd-logo">
+        <img :src="getImage('logo.png')" alt="R" />
+      </div>
       <div class="rd-sidebar__header">
         <div @click="toggle">
           <avatar :size="36" :name="userName" :background="'#140508'" />
@@ -122,6 +125,12 @@ export default {
           type: 'regular'
         },
         {
+          icon: 'code',
+          label: 'Developers',
+          name: 'developers',
+          type: 'regular'
+        },
+        {
           icon: 'settings',
           label: 'Settings',
           name: 'settings',
@@ -187,6 +196,17 @@ $--sidenav: 300px;
     overflow-y: scroll;
     z-index: 4;
     opacity: 0.8;
+
+    .rd-logo {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 30px;
+
+      img {
+        height: 36px;
+        width: auto;
+      }
+    }
 
     &__header {
       background: #d0516990;
@@ -421,6 +441,10 @@ $--sidenav: 300px;
       padding: 20px 5px;
       transition: width 0.3s ease-in;
       z-index: 4;
+
+      .rd-logo {
+        display: none;
+      }
 
       &__header {
         display: flex;

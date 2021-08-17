@@ -19,6 +19,8 @@ const Report = () => import('@/pages/reports/id')
 
 const Billings = () => import('@/pages/billings/index')
 
+const Developers = () => import('@/pages/developers/index')
+
 const Settings = () => import('@/pages/settings/index')
 const ApiCreate = () => import('@/pages/settings/api/create')
 const ApiEdit = () => import('@/pages/settings/api/edit')
@@ -137,6 +139,15 @@ const routes = [
     path: '/billings',
     name: 'billings.index',
     component: Billings,
+    meta: {
+      requiresAuth: true,
+      layout: 'app'
+    }
+  },
+  {
+    path: '/developers',
+    name: 'developers.index',
+    component: Developers,
     meta: {
       requiresAuth: true,
       layout: 'app'
