@@ -14,8 +14,6 @@ const AuthX = () => import('@/pages/authx/index')
 const AuthXCreate = () => import('@/pages/authx/create')
 const AuthXEdit = () => import('@/pages/authx/edit')
 
-const Identity = () => import('@/pages/identity/index')
-
 const Reports = () => import('@/pages/reports/index')
 const Report = () => import('@/pages/reports/id')
 
@@ -85,15 +83,6 @@ const routes = [
     path: '/verifications/verify-id',
     name: 'verifications.verify',
     component: IdVerification,
-    meta: {
-      requiresAuth: true,
-      layout: 'app'
-    }
-  },
-  {
-    path: '/identity/',
-    name: 'identity.index',
-    component: Identity,
     meta: {
       requiresAuth: true,
       layout: 'app'

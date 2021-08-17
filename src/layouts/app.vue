@@ -99,27 +99,15 @@ export default {
         },
         {
           icon: 'check-circle',
-          label: 'Verify',
+          label: 'Identity',
           name: 'verifications',
           type: 'regular'
         },
         {
-          icon: 'gift',
-          label: 'Products',
-          name: 'products',
-          type: 'group',
-          children: [
-            {
-              icon: 'user',
-              label: 'Identity',
-              name: 'identity'
-            },
-            {
-              icon: 'lock',
-              label: 'AuthX',
-              name: 'authx'
-            }
-          ]
+          icon: 'lock',
+          label: 'AuthX',
+          name: 'authx',
+          type: 'regular'
         },
         {
           icon: 'clipboard',
