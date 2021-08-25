@@ -2,38 +2,14 @@
   <div class="rd">
     <div class="rd-sidebar">
       <div class="rd-logo">
-        <img :src="getImage('logo.png')" alt="R" />
-      </div>
-      <div class="rd-sidebar__header">
-        <div @click="toggle">
-          <avatar :size="36" :name="userName" :background="'#140508'" />
-        </div>
-        <div class="rd-user">
-          <p>{{ userName }}</p>
-          <el-dropdown trigger="click" @command="command">
-            <div class="rd-user--action">
-              <i class="rd-icon--chevron-down"></i>
-            </div>
-            <el-dropdown-menu slot="dropdown">
-              <el-dropdown-item icon="rd-icon--user" command="settings"
-              >Profile</el-dropdown-item
-              >
-              <el-dropdown-item icon="el-icon-switch-button" command="logout"
-              >Logout</el-dropdown-item
-              >
-            </el-dropdown-menu>
-          </el-dropdown>
-        </div>
+        <img v-if="isCollapse" :src="getImage('icon.png')" alt="R" />
+        <img v-else :src="getImage('logo.png')" alt="R" />
       </div>
       <div class="rd-sidebar__menu">
         <el-menu
           :default-active="activeMenu"
+          :collapse="isCollapse"
           :router="true">
-          <el-menu-item class="notification">
-            <i :class="'rd-icon--bell'"></i>
-            <span>Notification</span>
-            <span class="badge">9</span>
-          </el-menu-item>
           <template v-for="(route, index) in routes">
             <el-submenu v-if="route.type === 'group'" :index="route.name" :key="index">
               <template slot="title">
@@ -62,14 +38,58 @@
           </template>
         </el-menu>
       </div>
+      <div class="rd-sidebar__toggler" :class="{ closed: isCollapse }">
+        <span @click="isCollapse = !isCollapse">
+          <i :class="`rd-icon--arrow-${isCollapse ? 'right' : 'left'}`"></i>
+        </span>
+      </div>
     </div>
-    <div class="rd-overlay" @click="closeNav"></div>
+    <div class="rd-overlay"></div>
     <div class="rd-dashboard--body">
-      <el-container>
-        <transition name="fade" mode="out-in">
-          <slot />
-        </transition>
-      </el-container>
+      <div class="rd-dashboard--body__nav">
+        <el-button type="primary" size="small">API Doc</el-button>
+        <div class="rd-notification">
+          <el-popover
+            placement="bottom-end"
+            title="Notifications"
+            trigger="click">
+            <div>
+              <p>This should be the content</p>
+            </div>
+            <el-badge slot="reference" is-dot class="item">
+            <span class="notification">
+              <i class="rd-icon--bell" />
+            </span>
+            </el-badge>
+          </el-popover>
+        </div>
+        <div>
+          <avatar :size="36" :name="userName" :background="'#cccccc'" />
+        </div>
+        <div class="rd-user">
+          <p>{{ userName }}</p>
+          <el-dropdown trigger="click" @command="command">
+            <div class="rd-user--action">
+              <i class="rd-icon--chevron-down"></i>
+            </div>
+            <el-dropdown-menu slot="dropdown">
+              <el-dropdown-item icon="rd-icon--user" command="settings"
+              >Profile</el-dropdown-item
+              >
+              <el-dropdown-item icon="el-icon-switch-button" command="logout"
+              >Logout</el-dropdown-item
+              >
+            </el-dropdown-menu>
+          </el-dropdown>
+        </div>
+      </div>
+      <div class="rd-dashboard--body__content">
+        <el-container>
+          <transition name="fade" mode="out-in">
+            <slot />
+          </transition>
+        </el-container>
+      </div>
       <div v-if="showFundWalletCTA" class="rd-fund--wallet">
         <div class="balance">
           <span>Balance</span>
@@ -91,8 +111,8 @@ export default {
   components: { FundWallet },
   data () {
     return {
-      userActive: true,
-      activeMenu: '',
+      isCollapse: false,
+      activeMenu: 'dashboard',
       routes: [
         {
           icon: 'grid',
@@ -125,12 +145,6 @@ export default {
           type: 'regular'
         },
         {
-          icon: 'code',
-          label: 'Developers',
-          name: 'developers',
-          type: 'regular'
-        },
-        {
           icon: 'settings',
           label: 'Settings',
           name: 'settings',
@@ -152,6 +166,11 @@ export default {
     if (this.$route.path !== null) {
       this.activeMenu = this.$route.path.split('/')[1]
     }
+
+    const mediaQuery = 'screen and (min-width:320px) and (max-width:1024px)'
+    window.matchMedia(mediaQuery).addEventListener('change', (data) => {
+      this.isCollapse = !!data.matches
+    })
   },
   watch: {
     $route () {
@@ -159,6 +178,10 @@ export default {
         this.activeMenu = this.$route.path.split('/')[1]
       }
     }
+  },
+  created () {
+    const mediaQuery = 'screen and (min-width:320px) and (max-width:1024px)'
+    this.isCollapse = window.matchMedia(mediaQuery).matches
   },
   methods: {
     command (command) {
@@ -168,19 +191,17 @@ export default {
         this.$router.push({ name: 'report' })
       }
     },
-    toggle () {
-      document.querySelector('.rd-sidebar').classList.toggle('open')
-    },
-    closeNav () {
-      document.querySelector('.rd-sidebar').classList.remove('open')
+    toggleNav () {
+      const mediaQuery = 'screen and (min-width:320px) and (max-width:1024px)'
+      window.matchMedia(mediaQuery).addEventListener('change', () => {
+        this.isCollapse = true
+      })
     }
   }
 }
 </script>
 
 <style lang="scss">
-$--sidenav: 300px;
-
 .rd {
   height: 100vh;
   width: 100%;
@@ -189,18 +210,16 @@ $--sidenav: 300px;
   align-items: center;
 
   .rd-sidebar {
-    width: $--sidenav;
     height: 100%;
-    background: #140508;
-    padding: 20px;
-    overflow-y: scroll;
+    background: #1d080c;
+    padding: 15px;
     z-index: 4;
-    opacity: 0.8;
+    position: relative;
 
     .rd-logo {
       display: flex;
       justify-content: center;
-      margin-bottom: 30px;
+      margin: 40px 0 50px;
 
       img {
         height: 36px;
@@ -208,59 +227,34 @@ $--sidenav: 300px;
       }
     }
 
-    &__header {
-      background: #d0516990;
-      border-radius: 8px;
-      padding: 10px;
-      margin-bottom: 40px;
-      display: flex;
-      align-items: center;
-
-      .rd-user {
-        margin-left: 5px;
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        width: 100%;
-
-        p {
-          margin: 0 10px;
-          font-weight: 500;
-          color: #fff;
-        }
-      }
-
-      .rd-user--action {
-        i {
-          color: #FFFFFF;
-        }
-      }
-  }
-
     &__menu {
       background: transparent;
-      width: 100%;
 
       .el-menu {
+        width: 250px;
         border: none;
         background: none;
-        margin-top: 16px;
+        margin-top: 20px;
         position: relative;
-        overflow-y: auto;
-        overflow-x: hidden;
+        overflow: hidden;
+
+        &.el-menu--collapse {
+          width: 64px;
+        }
 
         .el-menu-item {
           background: transparent;
           color: #FFFFFF;
           display: flex;
           align-items: center;
-          font-size: 14px;
+          font-size: 12px;
           font-weight: 400;
           opacity: 0.7;
           border-top-right-radius: 10px;
           border-bottom-right-radius: 10px;
           border-left: 5px solid transparent;
           padding: 14px 20px;
+          height: 50px;
           transition: all 0.3s ease-in-out;
 
           span {
@@ -269,6 +263,7 @@ $--sidenav: 300px;
           }
 
           i {
+            font-size: 14px;
             color: #FFFFFF;
           }
 
@@ -285,38 +280,6 @@ $--sidenav: 300px;
 
           &:hover:not(.is-active) {
             background: #fdf6f730;
-          }
-
-          &.notification {
-            padding-top: 26px !important;
-            padding-bottom: 26px !important;
-            margin: 16px 0 30px;
-            border-bottom-left-radius: 0;
-            border-bottom-right-radius: 0;
-            border-bottom: 1px solid #ffffff40;
-            position: relative;
-            opacity: 1;
-
-            i, span {
-              opacity: 0.5;
-            }
-
-            .badge {
-              opacity: 1;
-              height: 20px;
-              width: 20px;
-              border-radius: 50%;
-              background: #e1404d;
-              color: #ffffff;
-              font-size: 12px;
-              display: flex;
-              justify-content: center;
-              align-items: center;
-              position: absolute;
-              top: 50%;
-              transform: translateY(-50%);
-              right: 10px;
-            }
           }
         }
 
@@ -362,6 +325,34 @@ $--sidenav: 300px;
         }
       }
     }
+
+    &__toggler {
+      position: absolute;
+      bottom: 40px;
+      right: 20px;
+      cursor: pointer;
+
+      span {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 36px;
+        width: 36px;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.08);
+
+        i {
+          font-size: 14px;
+          color: #FFFFFF;
+        }
+      }
+
+      &.closed {
+        right: unset;
+        left: 50%;
+        transform: translateX(-50%);
+      }
+    }
   }
 
   .rd-overlay {
@@ -378,11 +369,58 @@ $--sidenav: 300px;
 
   .rd-dashboard--body {
     height: 100vh;
-    width: calc(100% - #{$--sidenav});
+    overflow: hidden;
+    width: 100%;
     background: #EEF0F5;
-    padding: 30px;
-    overflow-y: scroll;
     position: relative;
+
+    &__nav {
+      background: #FFFFFF;
+      height: 70px;
+      padding: 20px;
+      box-shadow: 3px 0 5px rgba(0, 0, 0, 0.08);
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+      position: relative;
+      z-index: 2;
+
+      .rd-notification {
+        margin: 0 30px;
+        cursor: pointer;
+
+        .notification {
+          i {
+            color: #140508;
+          }
+        }
+      }
+
+      .rd-user {
+        margin-left: 5px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+
+        p {
+          margin: 0 10px;
+          font-weight: 500;
+          color: #140508;
+        }
+      }
+
+      .rd-user--action {
+        i {
+          color: #140508;
+        }
+      }
+    }
+
+    &__content {
+      height: 100%;
+      padding: 30px;
+      overflow-y: scroll;
+    }
 
     .rd-fund--wallet {
       background: #36AFA4;
@@ -437,81 +475,10 @@ $--sidenav: 300px;
     .rd-sidebar {
       position: absolute;
       left: 0;
-      width: 80px;
-      padding: 20px 5px;
       transition: width 0.3s ease-in;
       z-index: 4;
 
-      .rd-logo {
-        display: none;
-      }
-
-      &__header {
-        display: flex;
-        justify-content: center;
-
-        .rd-user {
-          display: none;
-        }
-      }
-
-      &__menu {
-        .el-menu-item span {
-          display: none;
-        }
-
-        .el-submenu {
-          &__title span {
-            display: none;
-          }
-
-          .el-submenu__icon-arrow {
-            display: none;
-          }
-          .el-menu-item {
-            padding-left: 0 !important;
-          }
-        }
-      }
-
       &.open {
-        width: 300px !important;
-        padding: 20px;
-        transition: width 0.3s ease-out;
-
-        .rd-sidebar__header {
-          display: flex !important;
-          justify-content: space-between !important;
-
-          .rd-user {
-            display: flex !important;
-          }
-        }
-
-        .rd-sidebar__menu {
-          .el-menu-item span {
-            display: flex !important;
-          }
-
-          .el-submenu {
-            &__title {
-              display: flex !important;
-              align-items: center;
-
-              span {
-                display: flex;
-                padding-left: 10px !important;
-              }
-            }
-
-            .el-submenu__icon-arrow {
-              display: flex;
-            }
-            .el-menu-item {
-              padding-left: 10px !important;
-            }
-          }
-        }
 
         + .rd-overlay {
           opacity: 1;
@@ -523,37 +490,27 @@ $--sidenav: 300px;
 
     .rd-dashboard--body {
       width: 100% !important;
-      padding-left: 100px !important;
+
+      &__content {
+        padding-left: 130px !important;
+      }
     }
   }
 }
 
 @media (max-width: 600px) {
   .rd {
-    .rd-sidebar {
-      &.open {
-        width: 80% !important;
+    .rd-dashboard--body {
 
-        .rd-sidebar__header {
-          display: flex !important;
-          justify-content: space-between !important;
-
-          .rd-user {
-            display: flex !important;
-          }
-        }
-
-        .rd-sidebar__menu {
-          .el-menu-item span {
-            display: flex !important;
-          }
+      &__nav {
+        .rd-user p {
+          display: none;
         }
       }
-    }
-
-    .rd-dashboard--body {
-      padding-left: 80px !important;
-      padding-right: 10px !important;
+      &__content {
+        padding-left: 100px !important;
+        padding-right: 0px !important;
+      }
     }
   }
 }
